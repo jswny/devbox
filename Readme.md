@@ -52,7 +52,7 @@ docker stop devbox
 docker rm devbox
 ```
 
-### Remomve the Image
+### Remove the Image
 ```sh
 docker rmi jswny/devbox
 ```
@@ -77,12 +77,11 @@ Currently, the following configuration files are provided:
 - `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
 
 ## TODO
-- Fix errors in inital NeoVim startup
+- Restart stopped container
+- `exec` into background container
 - FZF Vim plugin installing FZF?
 - Set Tmux `$TERM`
 - Fix default Fish command color
 - Install Fuck
 - Fix hostname
 - SSH keys
-- Put on Docker Hug
-- Build automatically on CI

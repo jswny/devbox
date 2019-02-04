@@ -101,9 +101,14 @@ RUN make clean
 RUN make CMAKE_BUILD_TYPE=Release install
 RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
-# Install NeoVim plugins
-RUN vim --headless +PlugInstall +qa
+# Install vim-plug
+RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+# Install NeoVim plugins and output to log file since this output is not noninteractive
+RUN vim --headless '+PlugInstall --sync' +qa > /var/log/nvim_plug_install.log 2>&1
+
+# Set the root home directory as the working directory
 WORKDIR /root
 
 # Override this as needed

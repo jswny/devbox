@@ -2,8 +2,10 @@
 " Dependencies "
 """"""""""""""""
 
+" For Plugins
+" " vim-plug installed (https://github.com/junegunn/vim-plug)
 " For Deoplete:
-" " Neovim Python3 provider (pip3 install neovim)
+" " Neovim Python3 provider (pip3 install pynvim)
 " For LanguageClient_Neovim:
 " " ElixirLS built and available in $PATH (https://github.com/JakeBecker/elixir-ls)
 
@@ -33,17 +35,10 @@ augroup END
 " Plugins "
 """""""""""
 
-" Install Vim Plug into the Neovim autoload folder if not installed
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 " Installed plugins
 Plug 'elixir-lang/vim-elixir'
@@ -163,8 +158,8 @@ function! AirlineInit()
   let g:airline_section_error = airline#section#create(['LC_error_count'])
 endfunction
 
-call airline#parts#define_function('LC_warning_count', 'LC_warning_count')
-call airline#parts#define_function('LC_error_count', 'LC_error_count')
+silent! call airline#parts#define_function('LC_warning_count', 'LC_warning_count')
+silent! call airline#parts#define_function('LC_error_count', 'LC_error_count')
 
 function! LC_warning_count()
   let current_buf_number = bufnr('%')
