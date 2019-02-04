@@ -94,11 +94,12 @@ RUN apt-get install -y \
     g++ \
     pkg-config \
     unzip
-RUN git clone https://github.com/neovim/neovim.git /tmp/neovim
-WORKDIR /tmp/neovim
+RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
+WORKDIR /tmp/nvim
 RUN git checkout v0.3.2
 RUN make clean
 RUN make CMAKE_BUILD_TYPE=Release install
+RUN rm -rf /tmp/nvim
 RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
 # Install vim-plug

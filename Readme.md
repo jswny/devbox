@@ -77,6 +77,7 @@ Currently, the following configuration files are provided:
 - `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
 
 ## TODO
+- Fix empty `/tmp/nvim`
 - Restart stopped container
 - `exec` into background container
 - FZF Vim plugin installing FZF?
