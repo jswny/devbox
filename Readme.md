@@ -67,7 +67,9 @@ docker rmi jswny/devbox
 ## Host Terminal Configuration
 Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solarized/) colorscheme.
 
-I use iTerm 2 on macOS with the above colorscheme.
+In addition, the Fish prompt that is configured requires a powerline patched font to display certain things.
+
+I recommend iTerm 2 on macOS with the above colorscheme.
 
 ## Cofiguration Files
 Configuration files live in the `dotfiles` directory in this repository. When building the image, the contents of the `dotfiles` directory are copied directly into the `/root/` home directory for the `root` user.
@@ -80,9 +82,7 @@ Currently, the following configuration files are provided:
 - Fix empty `/tmp/nvim`
 - Restart stopped container
 - `exec` into background container
+- Install FZF
 - FZF Vim plugin installing FZF?
 - Set Tmux `$TERM`
-- Fix default Fish command color
-- Install Fuck
-- Fix hostname
 - SSH keys

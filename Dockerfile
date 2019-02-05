@@ -40,7 +40,15 @@ RUN mkdir -p ~/.config/fish
 # Change default shell to ZSH
 RUN chsh -s $(which fish)
 ENV SHELL /usr/bin/fish
+
+# Execute all following commands with Fish instead of Bash
 SHELL ["/usr/bin/fish", "-c"]
+
+# Install Fisher, to manage plugins for Fish
+RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+
+# Install Fish plugins via Fisher
+RUN fisher
 
 # Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
@@ -67,8 +75,8 @@ RUN apt-get install -y \
     libffi-dev \
     liblzma-dev
 RUN asdf plugin-add python https://github.com/danhper/asdf-python.git
-RUN asdf install python 3.7.2
 RUN asdf install python 2.7.15
+RUN asdf install python 3.7.2
 
 # Setup both Python 2 and 3 so either version can be used
 RUN asdf global python 3.7.2 2.7.15
@@ -76,6 +84,11 @@ RUN asdf global python 3.7.2 2.7.15
 # Upgrade Python 2 and 3 Pip versions
 RUN pip2 install --upgrade pip
 RUN pip3 install --upgrade pip
+
+# Install Fuck
+RUN pip3 install thefuck
+RUN ln -s /root/.asdf/installs/python/3.7.2/bin/thefuck /usr/local/bin/thefuck
+RUN echo 'thefuck --alias | source' >> ~/.config/fish/config.fish
 
 # Install Python 2 and 3 providers for NeoVim
 RUN pip2 install --upgrade pynvim
