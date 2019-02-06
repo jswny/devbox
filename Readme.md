@@ -81,7 +81,6 @@ Currently, the following configuration files are provided:
 - `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
 
 ## TODO
-- Keep default Python
 - Install Elixir
 - Restart stopped container
 - `exec` into background container
