@@ -50,49 +50,49 @@ RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fishe
 # Install Fish plugins via Fisher
 RUN fisher
 
-# # Install asdf
-# RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
-# RUN echo 'source ~/.asdf/asdf.fish' >> ~/.config/fish/config.fish
-# RUN mkdir -p ~/.config/fish/completions && cp ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+# Install asdf
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+RUN echo 'source ~/.asdf/asdf.fish' >> ~/.config/fish/config.fish
+RUN mkdir -p ~/.config/fish/completions && cp ~/.asdf/completions/asdf.fish ~/.config/fish/completions
 
-# # Install Python 2 and 3 through ASDF
-# RUN apt-get install -y \
-#     make \
-#     build-essential \
-#     libssl-dev \
-#     zlib1g-dev \
-#     libbz2-dev \
-#     libreadline-dev \
-#     libsqlite3-dev \
-#     wget \
-#     curl \
-#     llvm \
-#     libncurses5-dev \
-#     xz-utils \
-#     tk-dev \
-#     libxml2-dev \
-#     libxmlsec1-dev \
-#     libffi-dev \
-#     liblzma-dev
-# RUN asdf plugin-add python https://github.com/danhper/asdf-python.git
-# RUN asdf install python 2.7.15
-# RUN asdf install python 3.7.2
+# Install Python 2 and 3 through ASDF
+RUN apt-get install -y \
+    make \
+    build-essential \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    xz-utils \
+    tk-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libffi-dev \
+    liblzma-dev
+RUN asdf plugin-add python https://github.com/danhper/asdf-python.git
+RUN asdf install python 2.7.15
+RUN asdf install python 3.7.2
 
-# # Setup both Python 2 and 3 so either version can be used
-# RUN asdf global python 3.7.2 2.7.15
+# Setup both Python 2 and 3 so either version can be used
+RUN asdf global python 3.7.2 2.7.15
 
-# # Upgrade Python 2 and 3 Pip versions
-# RUN pip2 install --upgrade pip
-# RUN pip3 install --upgrade pip
+# Upgrade Python 2 and 3 Pip versions
+RUN pip2 install --upgrade pip
+RUN pip3 install --upgrade pip
 
-# # Install Fuck
-# RUN pip3 install thefuck
-# RUN ln -s /root/.asdf/installs/python/3.7.2/bin/thefuck /usr/local/bin/thefuck
-# RUN echo 'thefuck --alias | source' >> ~/.config/fish/config.fish
+# Install Fuck
+RUN pip3 install thefuck
+RUN ln -s /root/.asdf/installs/python/3.7.2/bin/thefuck /usr/local/bin/thefuck
+RUN echo 'thefuck --alias | source' >> ~/.config/fish/config.fish
 
-# # Install Python 2 and 3 providers for NeoVim
-# RUN pip2 install --upgrade pynvim
-# RUN pip3 install --upgrade pynvim
+# Install Python 2 and 3 providers for NeoVim
+RUN pip2 install --upgrade pynvim
+RUN pip3 install --upgrade pynvim
 
 # Build and install NeoVim from source
 # This is necessary because certain plugins require the latest version
