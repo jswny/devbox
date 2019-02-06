@@ -94,6 +94,10 @@ RUN echo 'thefuck --alias | source' >> ~/.config/fish/config.fish
 RUN pip2 install --upgrade pynvim
 RUN pip3 install --upgrade pynvim
 
+# Install FZF
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+RUN ~/.fzf/install
+
 # Build and install NeoVim from source
 # This is necessary because certain plugins require the latest version
 RUN apt-get install -y \

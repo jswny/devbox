@@ -2,12 +2,16 @@
 " Dependencies "
 """"""""""""""""
 
+" For everything:
+" " NeoVim (not Vim)
 " For Plugins
 " " vim-plug installed (https://github.com/junegunn/vim-plug)
 " For Deoplete:
 " " Neovim Python3 provider (pip3 install pynvim)
 " For LanguageClient_Neovim:
 " " ElixirLS built and available in $PATH (https://github.com/JakeBecker/elixir-ls)
+" For the FZF plugin:
+" " FZF installed (https://github.com/junegunn/fzf)
 
 """"""""""""""""
 " Key Bindings "
@@ -46,17 +50,11 @@ Plug 'tpope/vim-endwise'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'alvan/vim-closetag'
+Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
 Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'

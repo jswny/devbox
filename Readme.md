@@ -81,9 +81,8 @@ Currently, the following configuration files are provided:
 - `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
 
 ## TODO
+- Keep default Python
 - Install Elixir
-- FZF Vim plugin installing FZF?
-- Install FZF
 - Restart stopped container
 - `exec` into background container
 - Set Tmux `$TERM`
