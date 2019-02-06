@@ -63,6 +63,7 @@ docker rmi jswny/devbox
 - [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
   - Python 2 and 3 available via `python2` and `python3` respectively
 - [NeoVim](https://neovim.io/) with my custom configuration
+- [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
 
 ## Host Terminal Configuration
 Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solarized/) colorscheme.
