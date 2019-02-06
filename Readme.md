@@ -1,6 +1,15 @@
 # Devbox
 My personal development machine inside [Docker](https://www.docker.com/).
 
+## Features
+- [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
+- [Fish Shell](https://fishshell.com/)
+- [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
+- [NeoVim](https://neovim.io/) with my custom configuration
+- [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
+- Languages:
+  - Python 2 and 3 available via `python2` and `python3` respectively
+
 ## Getting Started
 ### Docker Image
 The Docker image is available from the [Docker Hub](https://hub.docker.com/r/jswny/devbox). A new image is pushed to the `jswny/devbox:latest` tag each time a new commit is pushed to the `master` branch of the [GitHub repository](https://github.com/jswny/devbox).
@@ -57,14 +66,6 @@ docker rm devbox
 docker rmi jswny/devbox
 ```
 
-## Features
-- [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
-- [Fish Shell](https://fishshell.com/)
-- [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
-  - Python 2 and 3 available via `python2` and `python3` respectively
-- [NeoVim](https://neovim.io/) with my custom configuration
-- [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
-
 ## Host Terminal Configuration
 Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solarized/) colorscheme.
 
@@ -80,10 +81,10 @@ Currently, the following configuration files are provided:
 - `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
 
 ## TODO
-- Fix empty `/tmp/nvim`
+- Install Elixir
+- FZF Vim plugin installing FZF?
+- Install FZF
 - Restart stopped container
 - `exec` into background container
-- Install FZF
-- FZF Vim plugin installing FZF?
 - Set Tmux `$TERM`
 - SSH keys
