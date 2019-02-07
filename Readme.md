@@ -3,14 +3,14 @@ My personal development machine inside [Docker](https://www.docker.com/).
 
 ## Features
 - [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
-- [Fish Shell](https://fishshell.com/)
+- [Zsh](http://zsh.sourceforge.net/) with [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh) installed
 - [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
 - [NeoVim](https://neovim.io/) with my custom configuration
 - [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
 
-## Getting Started
+## Usage
 ### Docker Image
 The Docker image is available from the [Docker Hub](https://hub.docker.com/r/jswny/devbox). A new image is pushed to the `jswny/devbox:latest` tag each time a new commit is pushed to the `master` branch of the [GitHub repository](https://github.com/jswny/devbox).
 
@@ -73,14 +73,18 @@ In addition, the Fish prompt that is configured requires a powerline patched fon
 
 I recommend iTerm 2 on macOS with the above colorscheme.
 
-## Cofiguration Files
-Configuration files live in the `dotfiles` directory in this repository. When building the image, the contents of the `dotfiles` directory are copied directly into the `/root/` home directory for the `root` user.
+## Configuration
+Configuration files live in the `dotfiles` directory in this repository. Devbox attempts to follow the [XDG Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) wherever possible.
 
 Currently, the following configuration files are provided:
-- `config.fish` for the [Fish Shell](https://fishshell.com/)
-- `fishfile` for [Fisher](https://github.com/jorgebucaran/fisher), the Fish shell plugin manager
+- `.config/zsh/.zshrc` for the [Z Shell](http://zsh.sourceforge.net/)
+- `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
+- `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
 
 ## TODO
+- Use environment variables in `Dockerfile`
+- Vi mode
+- Vim Solarized colors
 - Install Elixir
 - Restart stopped container
 - `exec` into background container

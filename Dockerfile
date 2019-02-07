@@ -1,7 +1,15 @@
 FROM ubuntu:18.04
 
-# Turn non-interactive on only for the build
+# Set environment variables for the build only (these won't persist when you run the container)
 ARG DEBIAN_FRONTEND=noninteractive
+ARG XDG_CONFIG_HOME=/root/.config
+ARG XDG_DATA_HOME=/root/.local/share
+ARG HOME=/root
+
+# Running commands through Zsh doesn't source .zshrc so ZSH_CUSTOM doesn't get set
+# So, we need to set this manually to install plugins and themes properly
+# After starting Zsh interactively, this will be set because .zshrc is sourced
+ARG ZSH_CUSTOM=$XDG_DATA_HOME/oh-my-zsh/custom
 
 # Update packages
 RUN apt-get update
@@ -13,7 +21,6 @@ ENV TERM xterm-256color
 RUN apt-get install -y \
     locales \
     apt-utils \
-    software-properties-common \
     make \
     cmake \
     git \
@@ -26,34 +33,41 @@ RUN apt-get install -y \
 # Generate the correct locale
 RUN locale-gen en_US.UTF-8
 
+# Install Zsh
+RUN apt-get install -y zsh
+
+# Change default shell to Zsh
+RUN chsh -s $(which zsh)
+ENV SHELL /usr/bin/zsh
+
 # Add custom config files
-ADD dotfiles /root/
+ADD dotfiles/.config/ $XDG_CONFIG_HOME
+ADD dotfiles/.zshenv $HOME/
 
-# Install Fish
-RUN apt-add-repository ppa:fish-shell/release-3
-RUN apt-get update
-RUN apt-get install -y fish
+# Run all of the following Dockerfile commands with Zsh instead of Bash
+SHELL ["/usr/bin/zsh", "-c"]
 
-# Create Fish config directory
-RUN mkdir -p ~/.config/fish
+# Make a Zsh directory in the XDG data directory so that Zsh history can be stored
+RUN mkdir -p $XDG_DATA_HOME/zsh
 
-# Change default shell to ZSH
-RUN chsh -s $(which fish)
-ENV SHELL /usr/bin/fish
+# Install Oh-My-Zsh into the XDG data directory
+RUN export ZSH="$XDG_DATA_HOME/oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Execute all following commands with Fish instead of Bash
-SHELL ["/usr/bin/fish", "-c"]
+# Install Zsh plugins and themes
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+RUN git clone https://github.com/denysdovhan/spaceship-prompt.git $ZSH_CUSTOM/themes/spaceship-prompt
+RUN ln -s $ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme $ZSH_CUSTOM/themes/spaceship.zsh-theme
 
-# Install Fisher, to manage plugins for Fish
-RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+# Remove default .zshrc
+RUN rm ~/.zshrc
 
-# Install Fish plugins via Fisher
-RUN fisher
+# Install FZF without Bash support
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
+RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
 
 # Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
-RUN echo 'source ~/.asdf/asdf.fish' >> ~/.config/fish/config.fish
-RUN mkdir -p ~/.config/fish/completions && cp ~/.asdf/completions/asdf.fish ~/.config/fish/completions
 
 # Install Pip for Python 2 and 3
 RUN apt-get install -y \
@@ -66,15 +80,10 @@ RUN pip3 install --upgrade pip
 
 # Install Fuck
 RUN pip3 install thefuck
-RUN echo 'thefuck --alias | source' >> ~/.config/fish/config.fish
 
 # Install Python 2 and 3 providers for NeoVim
 RUN pip2 install --upgrade pynvim
 RUN pip3 install --upgrade pynvim
-
-# Install FZF
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-RUN ~/.fzf/install
 
 # Build and install NeoVim from source
 # This is necessary because certain plugins require the latest version
@@ -99,14 +108,13 @@ RUN rm -rf /tmp/nvim
 RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
 # Install vim-plug
-RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install NeoVim plugins and output to log file since this output is not noninteractive
-RUN vim --headless '+PlugInstall --sync' +qa > /var/log/nvim_plug_install.log 2>&1
+RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
 
 # Set the root home directory as the working directory
 WORKDIR /root
 
 # Override this as needed
-CMD ["/usr/bin/fish"]
+CMD ["/usr/bin/zsh"]
