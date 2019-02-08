@@ -69,13 +69,17 @@ ZSH_THEME="spaceship"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git,
-  zsh-autosuggestions,
+  git
+  vi-mode
+  zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
 # Store command history in Zsh ditrectory inside XDG data directory
 export HISTFILE=$XDG_DATA_HOME/zsh/.zsh_history
+
+# Disable default Vi normal mode indicator (Spaceship Vi mode indicator needs this)
+export RPS1="%{$reset_color%}"
 
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
@@ -109,18 +113,23 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Make the autosuggestion text a bit darker so that it can be easily seen when Solarized Dark colors are used in the host terminal
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+
 # Enable Vi line editing mode
 bindkey -v
+# Enable backspace to work correctly in Vi mode
+bindkey "^?" backward-delete-char
 
 # Enable Solarized dircolors
 eval `dircolors $XDG_DATA_HOME/dircolors-solarized/dircolors.256dark`
 
-# # Set Fuck alias to "fuck"
-# eval $(thefuck --alias)
+# Set Fuck alias to "fuck"
+eval $(thefuck --alias)
 
-# # Source ASDF
-# source $HOME/.asdf/asdf.sh
-# source $HOME/.asdf/completions/asdf.bash
+# Source ASDF
+source $HOME/.asdf/asdf.sh
+source $HOME/.asdf/completions/asdf.bash
 
 # Source FZF 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
