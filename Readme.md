@@ -7,6 +7,8 @@ My personal development machine inside [Docker](https://www.docker.com/).
 - [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
 - [NeoVim](https://neovim.io/) with my custom configuration
 - [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
+- Colors:
+    - Solarized dark dircolors
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
 
@@ -94,10 +96,10 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
-- Vi mode for Zsh
 - Vim Solarized colors
 - Set Tmux `$TERM`
 - Tmux Solarized
+- Add screenshots
 - Install Elixir
 - Restart stopped container
 - `exec` into background container
