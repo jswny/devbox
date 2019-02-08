@@ -73,9 +73,14 @@ Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solariz
 
 In addition, the shell prompt that is configured requires a **Powerline patched font** to display certain things. You can find and install Powerline patched fonts through [this Powerline repository](https://github.com/powerline/fonts).
 
+You may need to tell your terminal to do the following (play around with these if the text doesn't look right):
+1. Don't draw bold text in bold font
+1. Draw bold text in  bright colors
+
 I recommend the following (this is my setup):
 - macOS
 - iTerm 2
+  - Bold text drawn in bold font
 - Solarized Dark
 - Meslo LG M DZ Powerline patched font
 
@@ -91,8 +96,9 @@ Currently, the following configuration files are provided:
 - Use environment variables in `Dockerfile`
 - Vi mode for Zsh
 - Vim Solarized colors
+- Set Tmux `$TERM`
+- Tmux Solarized
 - Install Elixir
 - Restart stopped container
 - `exec` into background container
-- Set Tmux `$TERM`
 - SSH keys

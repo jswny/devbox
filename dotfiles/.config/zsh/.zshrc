@@ -109,6 +109,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Enable Solarized dircolors
+eval `dircolors $XDG_DATA_HOME/dircolors-solarized/dircolors.256dark`
+
 # # Set Fuck alias to "fuck"
 # eval $(thefuck --alias)
 

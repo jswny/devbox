@@ -59,6 +59,9 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUST
 RUN git clone https://github.com/denysdovhan/spaceship-prompt.git $ZSH_CUSTOM/themes/spaceship-prompt
 RUN ln -s $ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme $ZSH_CUSTOM/themes/spaceship.zsh-theme
 
+# Enable Solarized dircolors
+RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
+
 # Remove default .zshrc
 RUN rm ~/.zshrc
 
