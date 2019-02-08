@@ -16,15 +16,17 @@ The Docker image is available from the [Docker Hub](https://hub.docker.com/r/jsw
 
 The image is based on [Ubuntu `18.04`](https://hub.docker.com/_/ubuntu).
 
+### Building from Source
+In the root of this repository, run:
+```sh
+docker build -t jswny/devbox .
+```
+
 ### Pulling from Docker Hub
 ```sh
 docker pull jswny/devbox
 ```
-
-### Building from Source
-```sh
-docker build -t jswny/devbox .
-```
+If you use `docker run` (as shown below), Docker will pull the image automatically. However, you may want to pull it manually if you don't want to run it right away or if you want to force the image to update from Docker Hub.
 
 ### Running
 ```sh
@@ -69,9 +71,13 @@ docker rmi jswny/devbox
 ## Host Terminal Configuration
 Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solarized/) colorscheme.
 
-In addition, the Fish prompt that is configured requires a powerline patched font to display certain things.
+In addition, the shell prompt that is configured requires a **Powerline patched font** to display certain things. You can find and install Powerline patched fonts through [this Powerline repository](https://github.com/powerline/fonts).
 
-I recommend iTerm 2 on macOS with the above colorscheme.
+I recommend the following (this is my setup):
+- macOS
+- iTerm 2
+- Solarized Dark
+- Meslo LG M DZ Powerline patched font
 
 ## Configuration
 Configuration files live in the `dotfiles` directory in this repository. Devbox attempts to follow the [XDG Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) wherever possible.
@@ -83,7 +89,7 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
-- Vi mode
+- Vi mode for Zsh
 - Vim Solarized colors
 - Install Elixir
 - Restart stopped container

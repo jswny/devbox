@@ -40,9 +40,9 @@ augroup END
 """""""""""
 
 " Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
+" - For Neovim: $XDG_DATA_HOME/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
 " Installed plugins
 Plug 'elixir-lang/vim-elixir'
@@ -50,7 +50,7 @@ Plug 'tpope/vim-endwise'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'alvan/vim-closetag'
-Plug '~/.fzf'
+Plug '$XDG_DATA_HOME/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
