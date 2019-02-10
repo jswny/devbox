@@ -113,6 +113,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Set aliases for Vim config and Zsh config for convenience
+alias vimconfig = "vim $XDG_CONFIG_HOME/nvim/init.vim"
+alias zshconfig = "vim $XDG_CONFIG_HOME/zsh/.zshrc"
+
 # Make the autosuggestion text a bit darker so that it can be easily seen when Solarized Dark colors are used in the host terminal
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 

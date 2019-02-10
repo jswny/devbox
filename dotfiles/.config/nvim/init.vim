@@ -60,6 +60,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
 Plug 'Yggdroot/indentLine'
 Plug 'zchee/deoplete-jedi'
+Plug 'altercation/vim-colors-solarized'
 " Plug 'SirVer/ultisnips'
 
 " Initialize plugin system
@@ -74,6 +75,9 @@ syntax enable
 
 " Set the background to dark (required for colors)
 set background=dark
+
+" Enable the Solarized colorscheme
+colorscheme solarized
 
 " Fix backspace so that it works normally
 set backspace=indent,eol,start
