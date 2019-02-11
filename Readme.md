@@ -98,8 +98,10 @@ Currently, the following configuration files are provided:
 - Use environment variables in `Dockerfile`
 - Set Tmux `$TERM`
 - Tmux Solarized
+- Vim Airline Solarized Dark theme
 - Add screenshots
 - Install Elixir
+- Powerline?
 - Restart stopped container
 - `exec` into background container
 - SSH keys
