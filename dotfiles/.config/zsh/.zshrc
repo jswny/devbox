@@ -14,7 +14,7 @@ export ZSH="$XDG_DATA_HOME/oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
+ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -113,7 +113,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Use vim as the default editor
 export EDITOR="vim"
+
+# Set correct locale environment variables (including UTF-8)
+# These are needed for Powerline fonts to work with Tmux
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Set aliases for Vim config and Zsh config for convenience
 alias vimconfig="vim $XDG_CONFIG_HOME/nvim/init.vim"
