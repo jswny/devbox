@@ -10,6 +10,13 @@ ARG HOME=/root
 # After starting Zsh interactively, this will be set because .zshrc is sourced
 ARG ZSH_CUSTOM=$XDG_DATA_HOME/oh-my-zsh/custom
 
+# Remove the exlusions for man pages and such so they get installed
+# This will only install man pages for packages that aren't built in
+# For example, "man ls" still won't work, but "man zsh" will
+# To restore ALL man pages, run "yes | unminimize"
+# However, this will take a long time and install a lot of extra packages as well
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+
 # Update packages
 RUN apt-get update
 
