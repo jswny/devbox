@@ -101,6 +101,7 @@ Currently, the following configuration files are provided:
 - Install Elixir
 - Powerline?
 - Fix tmux global alias
+- Fix no man files
 - Restart stopped container
 - `exec` into background container
 - SSH keys

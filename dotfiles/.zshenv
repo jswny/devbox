@@ -15,6 +15,4 @@ if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
 fi
 
 # Alias Tmux to use a config file which complies with XDG
-# This must be a global alias in order to work correctly with TPM scripts
-# However, this messes up other things like "man tmux"
-alias -g tmux="tmux -f '$XDG_CONFIG_HOME/tmux/tmux.conf'"
+# alias -g tmux="tmux -f '$XDG_CONFIG_HOME/tmux/tmux.conf'"
