@@ -65,56 +65,56 @@ RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/di
 # Remove default .zshrc
 RUN rm ~/.zshrc
 
-# Install FZF without Bash support
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
-RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
+# # Install FZF without Bash support
+# RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
+# RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
 
-# Install asdf
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+# # Install asdf
+# RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
 
-# Install Pip for Python 2 and 3
-RUN apt-get install -y \
-    python-pip \
-    python3-pip
+# # Install Pip for Python 2 and 3
+# RUN apt-get install -y \
+#     python-pip \
+#     python3-pip
 
-# Upgrade Python 2 and 3 Pip versions
-RUN pip2 install --upgrade pip
-RUN pip3 install --upgrade pip
+# # Upgrade Python 2 and 3 Pip versions
+# RUN pip2 install --upgrade pip
+# RUN pip3 install --upgrade pip
 
-# Install Fuck
-RUN pip3 install thefuck
+# # Install Fuck
+# RUN pip3 install thefuck
 
-# Install Python 2 and 3 providers for NeoVim
-RUN pip2 install --upgrade pynvim
-RUN pip3 install --upgrade pynvim
+# # Install Python 2 and 3 providers for NeoVim
+# RUN pip2 install --upgrade pynvim
+# RUN pip3 install --upgrade pynvim
 
-# Build and install NeoVim from source
-# This is necessary because certain plugins require the latest version
-RUN apt-get install -y \
-    ninja-build \
-    gettext \
-    libtool \
-    libtool-bin \
-    autoconf \
-    automake \
-    cmake \
-    g++ \
-    pkg-config \
-    unzip
-RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
-WORKDIR /tmp/nvim
-RUN git checkout v0.3.2
-RUN make clean
-RUN make CMAKE_BUILD_TYPE=Release install
-WORKDIR /root
-RUN rm -rf /tmp/nvim
-RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
+# # Build and install NeoVim from source
+# # This is necessary because certain plugins require the latest version
+# RUN apt-get install -y \
+#     ninja-build \
+#     gettext \
+#     libtool \
+#     libtool-bin \
+#     autoconf \
+#     automake \
+#     cmake \
+#     g++ \
+#     pkg-config \
+#     unzip
+# RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
+# WORKDIR /tmp/nvim
+# RUN git checkout v0.3.2
+# RUN make clean
+# RUN make CMAKE_BUILD_TYPE=Release install
+# WORKDIR /root
+# RUN rm -rf /tmp/nvim
+# RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
-# Install vim-plug
-RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# # Install vim-plug
+# RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Install NeoVim plugins and output to log file since this output is not noninteractive
-RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
+# # Install NeoVim plugins and output to log file since this output is not noninteractive
+# RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
 
 # Set the root home directory as the working directory
 WORKDIR /root

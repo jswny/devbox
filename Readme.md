@@ -90,7 +90,7 @@ I recommend the following (this is my setup):
 Configuration files live in the `dotfiles` directory in this repository. Devbox attempts to follow the [XDG Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) wherever possible.
 
 Currently, the following configuration files are provided:
-- `.config/zsh/.zshrc` for the [Z Shell](http://zsh.sourceforge.net/)
+- `.config/zsh/.zshrc` for [Zsh](http://zsh.sourceforge.net/)
 - `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
 - `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
 
