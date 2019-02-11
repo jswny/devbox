@@ -18,6 +18,7 @@ ENV TERM xterm-256color
 
 # Install essentials
 RUN apt-get install -y \
+    man-db \
     locales \
     apt-utils \
     make \
@@ -66,9 +67,8 @@ RUN rm ~/.zshrc
 
 # Install TPM (Tmux Plugin Manager)
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
-# Symlink to the regular Tmux config file location because otherwise TPM doesn't work
-RUN ln -s $XDG_CONFIG_HOME/tmux/tmux.conf $HOME/.tmux.conf
-
+# # Symlink to the regular Tmux config file location because otherwise TPM doesn't work
+# RUN ln -s $XDG_CONFIG_HOME/tmux/tmux.conf $HOME/.tmux.conf
 # Install TPM plugins
 RUN $XDG_DATA_HOME/tmux/plugins/tpm/bin/install_plugins
 

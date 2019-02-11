@@ -96,12 +96,11 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
-- Set Tmux `$TERM`
-- Tmux Solarized
 - Vim Airline Solarized Dark theme
 - Add screenshots
 - Install Elixir
 - Powerline?
+- Fix tmux global alias
 - Restart stopped container
 - `exec` into background container
 - SSH keys
