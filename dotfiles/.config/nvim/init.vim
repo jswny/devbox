@@ -53,6 +53,7 @@ Plug 'alvan/vim-closetag'
 Plug '$XDG_DATA_HOME/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
@@ -153,6 +154,25 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.eex'
 """""""""""
 " Airline "
 """""""""""
+
+" Setup the Airline symbols dictionary if it doesn't already exist 
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" Use Powerline symbols for Airline
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+
+" Enable the Solarized Dark Airline theme
+let g:airline_solarized_bg='dark'
+let g:airline_theme='solarized'
 
 " Add LanguageClient-Neovim error and warning counts to Airline
 function! AirlineInit()

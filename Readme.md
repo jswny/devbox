@@ -96,7 +96,6 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
-- Vim Airline Solarized Dark theme
 - Add screenshots
 - Install Elixir
 - Powerline?
