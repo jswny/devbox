@@ -88,10 +88,10 @@ You may need to tell your terminal to do the following (play around with these i
 
 I recommend the following (this is my setup):
 - macOS
-- iTerm 2
+- [iTerm 2](https://www.iterm2.com/)
   - Bold text drawn in bold font
-- Solarized Dark
-- Meslo LG M DZ Powerline patched font
+- [Solarized dark](https://ethanschoonover.com/solarized/) terminal colors
+- [Meslo LG M DZ Powerline patched font](https://github.com/powerline/fonts)
 
 ## Configuration
 Configuration files live in the `dotfiles` directory in this repository. Devbox attempts to follow the [XDG Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) wherever possible.
@@ -100,6 +100,7 @@ Currently, the following configuration files are provided:
 - `.config/zsh/.zshrc` for [Zsh](http://zsh.sourceforge.net/)
 - `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
 - `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
+- `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
 
 ## TODO
 - Use environment variables in `Dockerfile`
