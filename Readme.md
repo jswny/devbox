@@ -84,6 +84,8 @@ In addition, the shell prompt that is configured requires a **Powerline patched 
 
 You may need to tell your terminal to do the following (play around with these if the text doesn't look right):
 1. Don't draw bold text in bold font
+
+
 1. Draw bold text in  bright colors
 
 I recommend the following (this is my setup):
@@ -104,10 +106,9 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
-- Add screenshots
-- Install Elixir
-- Powerline?
-- Fix tmux global alias
-- Restart stopped container
-- `exec` into background container
-- SSH keys
+- Install Elixir with ASDF
+- Install Elixir-LS for use with NeoVim LS plugin
+- Figure out how to use SSH keys
+- Readme info on how to restart a stopped container
+- Readme info on how to `exec` into background container
+- Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
