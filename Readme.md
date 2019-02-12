@@ -1,14 +1,21 @@
 # Devbox
 My personal development machine inside [Docker](https://www.docker.com/).
 
+## Screenshot
+![Screenshot](screenshot.png)
+
 ## Features
 - [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
-- [Zsh](http://zsh.sourceforge.net/) with [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh) installed
+- [Zsh](http://zsh.sourceforge.net/)
+  - [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh) installed for Zsh management
 - [ASDF VM](https://github.com/asdf-vm/asdf) for managing multiple runtimes
 - [NeoVim](https://neovim.io/) with my custom configuration
 - [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
-- Colors:
+- Colors and themes:
+    - Agnoster Zsh theme
     - Solarized dark dircolors
+    - Solarized dark Vim Airline theme
+    - Tmux theme 
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
 

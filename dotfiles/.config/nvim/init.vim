@@ -170,7 +170,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
-" Enable the Solarized Dark Airline theme
+" Enable the Solarized dark Airline theme
 let g:airline_solarized_bg='dark'
 let g:airline_theme='solarized'
 
