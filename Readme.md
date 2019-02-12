@@ -12,10 +12,10 @@ My personal development machine inside [Docker](https://www.docker.com/).
 - [NeoVim](https://neovim.io/) with my custom configuration
 - [Fuck](https://github.com/nvbn/thefuck) for easily correcting commands
 - Colors and themes:
-    - Agnoster Zsh theme
-    - Solarized dark dircolors
-    - Solarized dark Vim Airline theme
-    - Tmux theme 
+    - [Agnoster Zsh theme](https://github.com/agnoster/agnoster-zsh-theme)
+    - [Solarized dark dircolors](https://github.com/seebi/dircolors-solarized)
+    - [Solarized dark Vim Airline theme](https://github.com/vim-airline/vim-airline-themes)
+    - [Tmux theme](https://github.com/jimeh/tmux-themepack) 
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
 
