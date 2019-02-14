@@ -108,6 +108,7 @@ Currently, the following configuration files are provided:
 - Use environment variables in `Dockerfile`
 - Install Elixir with ASDF
 - Install Elixir-LS for use with NeoVim LS plugin
+- Support Phoenix Development (probably requires configuring ports with Docker)
 - Figure out how to use SSH keys
 - Readme info on how to restart a stopped container
 - Readme info on how to `exec` into background container
