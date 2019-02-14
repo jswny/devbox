@@ -109,7 +109,9 @@ Currently, the following configuration files are provided:
 - Install Elixir with ASDF
 - Install Elixir-LS for use with NeoVim LS plugin
 - Support Phoenix Development (probably requires configuring ports with Docker)
+- Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
+- Fix snippet support in NeoVim with Elixir (etc.)
 - Figure out how to use SSH keys
+- Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
 - Readme info on how to restart a stopped container
 - Readme info on how to `exec` into background container
-- Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
