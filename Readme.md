@@ -105,7 +105,50 @@ Currently, the following configuration files are provided:
 - `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
 
 ## TODO
+- Install missing things for Erlang. When ASDF installs Erlang, the following output is generated:
+```sh
+Downloading kerl...
+Downloading OTP-21.2.5.tar.gz to /root/.asdf/plugins/erlang/kerl-home/archives
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   122    0   122    0     0    453      0 --:--:-- --:--:-- --:--:--   453
+100 51.4M    0 51.4M    0     0  6126k      0 --:--:--  0:00:08 --:--:-- 8182k
+Extracting source code
+Building Erlang/OTP 21.2.5 (asdf_21.2.5), please wait...
+APPLICATIONS DISABLED (See: /root/.asdf/plugins/erlang/kerl-home/builds/asdf_21.2.5/otp_build_21.2.5.log)
+ * jinterface     : No Java compiler found
+ * odbc           : ODBC library - link check failed
+
+APPLICATIONS INFORMATION (See: /root/.asdf/plugins/erlang/kerl-home/builds/asdf_21.2.5/otp_build_21.2.5.log)
+ * wx             : wxWidgets not found, wx will NOT be usable
+
+DOCUMENTATION INFORMATION (See: /root/.asdf/plugins/erlang/kerl-home/builds/asdf_21.2.5/otp_build_21.2.5.log)
+ * documentation  :
+ *                  xsltproc is missing.
+ *                  fop is missing.
+ *                  xmllint is missing.
+ *                  The documentation can not be built.
+
+Erlang/OTP 21.2.5 (asdf_21.2.5) has been successfully built
+Installing Erlang/OTP 21.2.5 (asdf_21.2.5) in /root/.asdf/installs/erlang/21.2.5...
+You can activate this installation running the following command:
+. /root/.asdf/installs/erlang/21.2.5/activate
+Later on, you can leave the installation typing:
+kerl_deactivate
+Cleaning up compilation products for
+Cleaned up compilation products for  under /root/.asdf/plugins/erlang/kerl-home/builds
+
+Erlang 21.2.5 has been installed. Activate globally with:
+
+    asdf global erlang 21.2.5
+
+Activate locally in the current folder with:
+
+    asdf local erlang 21.2.5
+```
 - Use environment variables in `Dockerfile`
+- Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
+- Move `.zcompdump-*` files from `$XDG_CONFIG_HOME/zsh` ([see this StackOverflow answer](https://unix.stackexchange.com/questions/391641/separate-path-for-zcompdump-files))
 - Install Elixir with ASDF
 - Install Elixir-LS for use with NeoVim LS plugin
 - Support Phoenix Development (probably requires configuring ports with Docker)

@@ -83,55 +83,75 @@ RUN $XDG_DATA_HOME/tmux/plugins/tpm/bin/install_plugins
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
 RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
 
-# Install asdf
+# Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
-
-# Install Pip for Python 2 and 3
+# Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
+# Install Erlang with ASDF
 RUN apt-get install -y \
-    python-pip \
-    python3-pip
-
-# Upgrade Python 2 and 3 Pip versions
-RUN pip2 install --upgrade pip
-RUN pip3 install --upgrade pip
-
-# Install Fuck
-RUN pip3 install thefuck
-
-# Install Python 2 and 3 providers for NeoVim
-RUN pip2 install --upgrade pynvim
-RUN pip3 install --upgrade pynvim
-
-# Build and install NeoVim from source
-# This is necessary because certain plugins require the latest version
-RUN apt-get install -y \
-    ninja-build \
-    gettext \
-    libtool \
-    libtool-bin \
+    build-essential \
     autoconf \
-    automake \
-    cmake \
-    g++ \
-    pkg-config \
-    unzip
-RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
-WORKDIR /tmp/nvim
-RUN git checkout v0.3.2
-RUN make clean
-RUN make CMAKE_BUILD_TYPE=Release install
-WORKDIR /root
-RUN rm -rf /tmp/nvim
-RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
+    m4 \
+    libncurses5-dev \
+    libwxgtk3.0-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libpng3 \
+    libssh-dev \
+    unixodbc-dev \
+    xsltproc \
+    fop
+# Install languages with ASDF and set globals
+RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
+RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
+RUN source $HOME/.asdf/asdf.sh && asdf install elixir 1.8.1-otp-21
+RUN source $HOME/.asdf/asdf.sh && asdf global elixir 1.8.1-otp-21
 
-# Install vim-plug
-RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# # Install Pip for Python 2 and 3
+# RUN apt-get install -y \
+#     python-pip \
+#     python3-pip
+# # Upgrade Python 2 and 3 Pip versions
+# RUN pip2 install --upgrade pip
+# RUN pip3 install --upgrade pip
 
-# Install NeoVim plugins and output to log file since this output is not noninteractive
-RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
+# # Install Fuck
+# RUN pip3 install thefuck
 
-# Set the root home directory as the working directory
-WORKDIR /root
+# # Install Python 2 and 3 providers for NeoVim
+# RUN pip2 install --upgrade pynvim
+# RUN pip3 install --upgrade pynvim
+# # Build and install NeoVim from source
+# # This is necessary because certain plugins require the latest version
+# RUN apt-get install -y \
+#     ninja-build \
+#     gettext \
+#     libtool \
+#     libtool-bin \
+#     autoconf \
+#     automake \
+#     cmake \
+#     g++ \
+#     pkg-config \
+#     unzip
+# RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
+# WORKDIR /tmp/nvim
+# RUN git checkout v0.3.2
+# RUN make clean
+# RUN make CMAKE_BUILD_TYPE=Release install
+# WORKDIR /root
+# RUN rm -rf /tmp/nvim
+# RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
+
+# # Install vim-plug
+# RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# # Install NeoVim plugins and output to log file since this output is not noninteractive
+# RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
+
+# # Set the root home directory as the working directory
+# WORKDIR /root
 
 # Override this as needed
 CMD ["/usr/bin/zsh"]
