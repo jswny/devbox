@@ -83,14 +83,36 @@ RUN $XDG_DATA_HOME/tmux/plugins/tpm/bin/install_plugins
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
 RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
 
-# Install asdf
+# Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+# Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
+# Install Erlang with ASDF
+RUN apt-get install -y \
+    build-essential \
+    autoconf \
+    m4 \
+    libncurses5-dev \
+    libwxgtk3.0-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libpng16-16 \
+    libssh-dev \
+    unixodbc-dev \
+    xsltproc \
+    libxml2-utils \
+    fop
+# Install languages with ASDF and set globals
+RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
+RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
+RUN source $HOME/.asdf/asdf.sh && asdf install elixir 1.8.1-otp-21
+RUN source $HOME/.asdf/asdf.sh && asdf global elixir 1.8.1-otp-21
 
 # Install Pip for Python 2 and 3
 RUN apt-get install -y \
     python-pip \
     python3-pip
-
 # Upgrade Python 2 and 3 Pip versions
 RUN pip2 install --upgrade pip
 RUN pip3 install --upgrade pip
@@ -101,7 +123,6 @@ RUN pip3 install thefuck
 # Install Python 2 and 3 providers for NeoVim
 RUN pip2 install --upgrade pynvim
 RUN pip3 install --upgrade pynvim
-
 # Build and install NeoVim from source
 # This is necessary because certain plugins require the latest version
 RUN apt-get install -y \

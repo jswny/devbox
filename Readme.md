@@ -106,6 +106,8 @@ Currently, the following configuration files are provided:
 
 ## TODO
 - Use environment variables in `Dockerfile`
+- Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
+- Move `.zcompdump-*` files from `$XDG_CONFIG_HOME/zsh` ([see this StackOverflow answer](https://unix.stackexchange.com/questions/391641/separate-path-for-zcompdump-files))
 - Install Elixir with ASDF
 - Install Elixir-LS for use with NeoVim LS plugin
 - Support Phoenix Development (probably requires configuring ports with Docker)
