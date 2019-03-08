@@ -2,7 +2,7 @@
 My personal development machine inside [Docker](https://www.docker.com/).
 
 ## Screenshot
-![Screenshot](screenshot.png)
+![Screenshot](images/screenshot.png)
 
 ## Features
 - [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
@@ -101,6 +101,13 @@ Currently, the following configuration files are provided:
 - `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
 - `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
 - `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
+
+## Known Issues
+- When running Devbox inside Tmux from the host, Zsh does not render the prompt spacing correctly, so the Agnoster prompt will not have a space before typing like it should have.
+  - With Tmux:
+  ![Issue with Tmux](images/issue-tmux-zsh-spacing-bad.png)
+  - Without Tmux:
+  ![Issue without Tmux](images/issue-tmux-zsh-spacing-good.png)
 
 ## TODO
 - Use environment variables in `Dockerfile`
