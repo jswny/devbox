@@ -2,7 +2,7 @@
 My personal development machine inside [Docker](https://www.docker.com/).
 
 ## Screenshot
-![Screenshot](screenshot.png)
+![Screenshot](images/screenshot.png)
 
 ## Features
 - [Tmux](https://github.com/tmux/tmux) for terminal multiplexing
@@ -83,10 +83,8 @@ Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solariz
 In addition, the shell prompt that is configured requires a **Powerline patched font** to display certain things. You can find and install Powerline patched fonts through [this Powerline repository](https://github.com/powerline/fonts).
 
 You may need to tell your terminal to do the following (play around with these if the text doesn't look right):
-1. Don't draw bold text in bold font
-
-
-1. Draw bold text in  bright colors
+1. Draw bold text in bold font
+2. Draw bold text in bright colors
 
 I recommend the following (this is my setup):
 - macOS
@@ -103,6 +101,13 @@ Currently, the following configuration files are provided:
 - `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
 - `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
 - `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
+
+## Known Issues
+- When running Devbox inside Tmux from the host, Zsh does not render the prompt spacing correctly, so the Agnoster prompt will not have a space before typing like it should have.
+  - With Tmux:
+  ![Issue with Tmux](images/issue-tmux-zsh-spacing-bad.png)
+  - Without Tmux:
+  ![Issue without Tmux](images/issue-tmux-zsh-spacing-good.png)
 
 ## TODO
 - Install missing things for Erlang. When ASDF installs Erlang, the following output is generated:
@@ -149,7 +154,6 @@ Activate locally in the current folder with:
 - Use environment variables in `Dockerfile`
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Move `.zcompdump-*` files from `$XDG_CONFIG_HOME/zsh` ([see this StackOverflow answer](https://unix.stackexchange.com/questions/391641/separate-path-for-zcompdump-files))
-- Install Elixir with ASDF
 - Install Elixir-LS for use with NeoVim LS plugin
 - Support Phoenix Development (probably requires configuring ports with Docker)
 - Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
