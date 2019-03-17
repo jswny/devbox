@@ -19,38 +19,48 @@ My personal development machine inside [Docker](https://www.docker.com/).
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
 
+## Builds
+The image is automatically built to [Docker Hub here](https://hub.docker.com/r/jswny/devbox) from each commit on the master branch. Thus, the only tag on the image is `latest`. So, when you pull the image, you will pull the image which was built from the latest commit to master.
+
 ## Usage
 ### Docker Image
 The Docker image is available from the [Docker Hub](https://hub.docker.com/r/jswny/devbox). A new image is pushed to the `jswny/devbox:latest` tag each time a new commit is pushed to the `master` branch of the [GitHub repository](https://github.com/jswny/devbox).
 
 The image is based on [Ubuntu `18.04`](https://hub.docker.com/_/ubuntu).
 
-### Building from Source
-In the root of this repository, run:
+### Getting the Image
+To run the image, you can either clone this repository and build the image from source (which will take about 10-15 minutes), or, you can pull it and run it from Docker Hub. See below for instructions for each option.
+
+#### Building from Source
+To build the image from source, first clone this repository, then build it using Docker.
 ```sh
-docker build -t jswny/devbox .
+$ git clone https://github.com/jswny/devbox
+$ cd devbox
+$ docker build -t jswny/devbox .
 ```
 
-### Pulling from Docker Hub
+#### Pulling from Docker Hub
+If you want to pull the prebuilt image from Docker Hub instead of building it yourself, all you have to do is pull it using Docker.
 ```sh
-docker pull jswny/devbox
+$ docker pull jswny/devbox
 ```
 If you use `docker run` (as shown below), Docker will pull the image automatically. However, you may want to pull it manually if you don't want to run it right away or if you want to force the image to update from Docker Hub.
 
-### Running
+### Running the Image
+Once you have the image either built from source or pulled from Docker Hub, you can run it using Docker
 ```sh
-docker run -it -h devbox --name devbox jswny/devbox
+$ docker run -it -h devbox --name devbox jswny/devbox
 ```
-This command sets the internal hostname of the container as `devbox`.
+This command sets the internal hostname of the container as `devbox` using the `-h` flag.
 
 You can also run the container so that it automatically removes itself after it stops running with the `--rm` flag. Keep in mind that this may cause you to lose any data from inside the container.
 ```sh
-docker run -it --rm -h devbox --name devbox jswny/devbox
+$ docker run -it --rm -h devbox --name devbox jswny/devbox
 ```
 
 You may also want to run the container without a name, or without a hostname, so that you can run many container instances of this image. To do so, remove those commands like so:
 ```sh
-docker run -it jswny/devbox
+$ docker run -it jswny/devbox
 ```
 
 ### Volumes
@@ -59,22 +69,22 @@ You can use a [Docker volume](https://docs.docker.com/storage/volumes/) to mount
 To mount a volume when running the container, add the `-v /local/path/:/internal/container/path` flag when running the container.
 
 ```sh
-docker run -it --rm -v /local/path/:/internal/container/path -h devbox --name devbox jswny/devbox
+$ docker run -it --rm -v /local/path/:/internal/container/path -h devbox --name devbox jswny/devbox
 ```
 
 ### Stop the Container
 ```sh
-docker stop devbox
+$ docker stop devbox
 ```
 
 ### Remove a Stopped Container
 ```sh
-docker rm devbox
+$ docker rm devbox
 ```
 
 ### Remove the Image
 ```sh
-docker rmi jswny/devbox
+$ docker rmi jswny/devbox
 ```
 
 ## Host Terminal Configuration
