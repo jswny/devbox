@@ -5,6 +5,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG XDG_CONFIG_HOME=/root/.config
 ARG XDG_DATA_HOME=/root/.local/share
 ARG HOME=/root
+# Set the correct locale because otherwise it won't be set until login
+ARG LC_ALL=en_US.UTF-8
 # Running commands through Zsh doesn't source .zshrc so ZSH_CUSTOM doesn't get set
 # So, we need to set this manually to install plugins and themes properly
 # After starting Zsh interactively, this will be set because .zshrc is sourced
@@ -155,6 +157,7 @@ RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
 RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
 # Install Hex
 RUN source $HOME/.asdf/asdf.sh && mix local.hex --force
+
 
 # Install and build Elixir-LS
 RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
