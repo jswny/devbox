@@ -120,6 +120,7 @@ Currently, the following configuration files are provided:
   ![Issue without Tmux](images/issue-tmux-zsh-spacing-good.png)
 
 ## TODO
+- Fix locale generation
 - Use environment variables in `Dockerfile`
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Move `.zcompdump-*` files from `$XDG_CONFIG_HOME/zsh` ([see this StackOverflow answer](https://unix.stackexchange.com/questions/391641/separate-path-for-zcompdump-files))
@@ -130,5 +131,6 @@ Currently, the following configuration files are provided:
 - Fix snippet support in NeoVim with Elixir (etc.)
 - Figure out how to use SSH keys
 - Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
+- Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
 - Readme info on how to restart a stopped container
 - Readme info on how to `exec` into background container

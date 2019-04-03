@@ -151,6 +151,20 @@ RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://
 # Install NeoVim plugins and output to log file since this output is not noninteractive
 RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
 
+# Install Rebar3
+RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
+# Install Hex
+RUN source $HOME/.asdf/asdf.sh && mix local.hex --force
+
+# Install and build Elixir-LS
+RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
+WORKDIR /usr/local/share/elixir-ls
+RUN rm .tool-versions
+RUN source $HOME/.asdf/asdf.sh && mix deps.get
+RUN source $HOME/.asdf/asdf.sh && mix compile
+RUN source $HOME/.asdf/asdf.sh && mix elixir_ls.release
+RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir_ls.sh 
+
 # Set the root home directory as the working directory
 WORKDIR /root
 
