@@ -35,12 +35,13 @@ RUN apt-get install -y \
     git \
     curl 
 
+# Generate the correct locale and reconfigure the locales so they are picked up
+RUN locale-gen en_US.UTF-8
+RUN dpkg-reconfigure locales
+
 # Install user packages
 RUN apt-get install -y \
     tmux
-
-# Generate the correct locale
-RUN locale-gen en_US.UTF-8
 
 # Install Zsh
 RUN apt-get install -y zsh
