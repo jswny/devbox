@@ -18,6 +18,10 @@ My personal development machine inside [Docker](https://www.docker.com/).
     - [Tmux theme](https://github.com/jimeh/tmux-themepack) 
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
+  - [Erlang/OTP 21.2.5](https://www.erlang.org/) installed via ASDF
+  - [Elixir 1.8.1](https://elixir-lang.org/) installed via ASDF
+- Other tools:
+  - [Elixir-LS language server](https://github.com/elixir-lsp/elixir-ls) for use with NeoVim.
 
 ## Builds
 The image is automatically built to [Docker Hub here](https://hub.docker.com/r/jswny/devbox) from each commit on the master branch. Thus, the only tag on the image is `latest`. So, when you pull the image, you will pull the image which was built from the latest commit to master.
