@@ -82,9 +82,6 @@ export HISTFILE=$XDG_DATA_HOME/zsh/.zsh_history
 # We do this by providing the ZSH_COMPDUMP environment variable which is used when Oh My Zsh calls compinit
 export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
-# Disable default Vi normal mode indicator (Spaceship Vi mode indicator needs this)
-export RPS1="%{$reset_color%}"
-
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 

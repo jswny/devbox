@@ -7,8 +7,6 @@ ARG XDG_CONFIG_HOME=/root/.config
 ARG XDG_DATA_HOME=/root/.local/share
 ARG XDG_CACHE_HOME=/root/.cache
 ARG HOME=/root
-# Set the correct locale because otherwise it won't be set until login
-ARG LC_ALL=en_US.UTF-8
 # Running commands through Zsh doesn't source .zshrc so ZSH_CUSTOM doesn't get set
 # So, we need to set this manually to install plugins and themes properly
 # After starting Zsh interactively, this will be set because .zshrc is sourced
@@ -69,11 +67,11 @@ RUN export ZSH="$XDG_DATA_HOME/oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githu
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
-# Enable Solarized dircolors
-RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
-
 # Remove default .zshrc
 RUN rm ~/.zshrc
+
+# Enable Solarized dircolors
+RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
 
 # Install TPM (Tmux Plugin Manager)
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm

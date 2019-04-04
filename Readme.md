@@ -138,3 +138,5 @@ Currently, the following configuration files are provided:
 - Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
 - Readme info on how to restart a stopped container
 - Readme info on how to `exec` into background container
+- Readme info on goals
+- Readme info on advantages/disadvantages
