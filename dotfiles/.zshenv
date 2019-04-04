@@ -9,7 +9,7 @@ if [[ -z "$XDG_CACHE_HOME" ]]; then
   export XDG_CACHE_HOME="$HOME/.cache"
 fi
 
-# Use XDG for config files
+# Use XDG for Zsh config files
 if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
   export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 fi

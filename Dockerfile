@@ -2,8 +2,10 @@ FROM ubuntu:18.04
 
 # Set environment variables for the build only (these won't persist when you run the container)
 ARG DEBIAN_FRONTEND=noninteractive
+# Set XDG variables
 ARG XDG_CONFIG_HOME=/root/.config
 ARG XDG_DATA_HOME=/root/.local/share
+ARG XDG_CACHE_HOME=/root/.cache
 ARG HOME=/root
 # Set the correct locale because otherwise it won't be set until login
 ARG LC_ALL=en_US.UTF-8
@@ -35,7 +37,7 @@ RUN apt-get install -y \
     git \
     curl 
 
-# Generate the correct locale and reconfigure the locales so they are picked up
+# Generate the correct locale and reconfigure the locales so they are picked up correctly
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 
@@ -58,16 +60,14 @@ SHELL ["/usr/bin/zsh", "-c"]
 
 # Make a Zsh directory in the XDG data directory so that Zsh history can be stored
 RUN mkdir -p $XDG_DATA_HOME/zsh
+# Make a Zsh directory in the XDG cache directory so that Zsh .zcompdump completion files can be stored
+RUN mkdir -p $XDG_CACHE_HOME/zsh
 
 # Install Oh-My-Zsh into the XDG data directory
 RUN export ZSH="$XDG_DATA_HOME/oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Install Oh-My-Zsh plugins and themes
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-# RUN git clone https://github.com/denysdovhan/spaceship-prompt.git $ZSH_CUSTOM/themes/spaceship-prompt
-# RUN ln -s $ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme $ZSH_CUSTOM/themes/spaceship.zsh-theme
-# RUN git clone https://github.com/bhilburn/powerlevel9k.git $ZSH_CUSTOM/themes/powerlevel9k
-# RUN ln -s $ZSH_CUSTOM/themes/powerlevel9k/powerlevel9k.zsh-theme $ZSH_CUSTOM/themes/powerlevel9k.zsh-theme
 
 # Enable Solarized dircolors
 RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
@@ -158,7 +158,6 @@ RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
 RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
 # Install Hex
 RUN source $HOME/.asdf/asdf.sh && mix local.hex --force
-
 
 # Install and build Elixir-LS
 RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls

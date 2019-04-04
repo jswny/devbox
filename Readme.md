@@ -113,7 +113,7 @@ Configuration files live in the `dotfiles` directory in this repository. Devbox 
 Currently, the following configuration files are provided:
 - `.config/zsh/.zshrc` for [Zsh](http://zsh.sourceforge.net/)
 - `.config/nvim/init.vim` for [NeoVim](https://neovim.io/) (similar to `.vimrc` for Vim)
-- `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly
+- `zshenv` to configure Zsh to use [XDG](https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html) and set environment variables accordingly. These need to be set prior to sourcing `.zshrc` because the `.zshrc` file is located inside the XDG config directory.
 - `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
 
 ## Known Issues
