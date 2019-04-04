@@ -126,6 +126,7 @@ Currently, the following configuration files are provided:
 ## TODO
 - Use environment variables in `Dockerfile`
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
+- Fix duplicate `.zcompdump*` files (one in `$ZDOTDIR` and one in `$XDG_CACHE_HOME/zsh`)
 - Fix `.zcompdump*` files missing `$SHORT_HOST` in their file names
 - Install Elixir-LS for use with NeoVim LS plugin
 - Install Elixir and Erlang from source so that Elixir-LS can jump to source
