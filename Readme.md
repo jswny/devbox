@@ -124,7 +124,6 @@ Currently, the following configuration files are provided:
   ![Issue without Tmux](images/issue-tmux-zsh-spacing-good.png)
 
 ## TODO
-- Use environment variables in `Dockerfile`
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Fix duplicate `.zcompdump*` files (one in `$ZDOTDIR` and one in `$XDG_CACHE_HOME/zsh`)
 - Fix `.zcompdump*` files missing `$SHORT_HOST` in their file names

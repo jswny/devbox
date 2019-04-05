@@ -142,7 +142,7 @@ WORKDIR /tmp/nvim
 RUN git checkout v0.3.2
 RUN make clean
 RUN make CMAKE_BUILD_TYPE=Release install
-WORKDIR /root
+WORKDIR $HOME
 RUN rm -rf /tmp/nvim
 RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
@@ -167,7 +167,7 @@ RUN source $HOME/.asdf/asdf.sh && mix elixir_ls.release
 RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir_ls.sh 
 
 # Set the root home directory as the working directory
-WORKDIR /root
+WORKDIR $HOME
 
 # Override this as needed
 CMD ["/usr/bin/zsh"]
