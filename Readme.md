@@ -156,7 +156,6 @@ Currently, the following configuration files are provided:
 
 ## Features TODO
 - Add [Tmux CPU plugin](https://github.com/tmux-plugins/tmux-cpu)
-- Install Elixir and Erlang from source so that Elixir-LS can jump to source
 - Support Phoenix Development (probably requires configuring ports with Docker)
 - Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
 - Fix snippet support in NeoVim with Elixir (etc.)
