@@ -113,8 +113,9 @@ RUN apt-get install -y \
 # Install languages with ASDF and set globals
 RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
 RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
-RUN source $HOME/.asdf/asdf.sh && asdf install elixir 1.8.1-otp-21
-RUN source $HOME/.asdf/asdf.sh && asdf global elixir 1.8.1-otp-21
+# Install Elixir 1.8.0 instead of 1.8.1 because otherwise there is one failing test (https://github.com/elixir-lang/elixir/issues/8640)
+RUN source $HOME/.asdf/asdf.sh && asdf install elixir ref:v1.8.0
+RUN source $HOME/.asdf/asdf.sh && asdf global elixir ref:v1.8.0
 
 # Install Pip for Python 2 and 3
 RUN apt-get install -y \

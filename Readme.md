@@ -19,7 +19,7 @@ My personal development machine inside [Docker](https://www.docker.com/).
 - Languages:
   - Python 2 and 3 available via `python2` and `python3` respectively
   - [Erlang/OTP 21.2.5](https://www.erlang.org/) installed via ASDF
-  - [Elixir 1.8.1](https://elixir-lang.org/) installed via ASDF
+  - [Elixir 1.8.0](https://elixir-lang.org/) installed via ASDF
 - Other tools:
   - [Elixir-LS language server](https://github.com/elixir-lsp/elixir-ls) for use with NeoVim.
 
