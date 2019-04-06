@@ -172,7 +172,7 @@ RUN rm .tool-versions
 RUN source $HOME/.asdf/asdf.sh && mix deps.get
 RUN source $HOME/.asdf/asdf.sh && mix compile
 RUN source $HOME/.asdf/asdf.sh && mix elixir_ls.release
-RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir_ls.sh 
+RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir-ls.sh 
 
 # Set the root home directory as the working directory
 WORKDIR $HOME

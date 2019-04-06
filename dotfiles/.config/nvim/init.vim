@@ -9,7 +9,7 @@
 " For Deoplete:
 " " Neovim Python3 provider (pip3 install pynvim)
 " For LanguageClient_Neovim:
-" " ElixirLS built and available in $PATH (https://github.com/JakeBecker/elixir-ls)
+" " ElixirLS built and available in $PATH as elixir_ls.sh (https://github.com/JakeBecker/elixir-ls)
 " For the FZF plugin:
 " " FZF installed (https://github.com/junegunn/fzf)
 

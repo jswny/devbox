@@ -127,7 +127,6 @@ Currently, the following configuration files are provided:
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Fix duplicate `.zcompdump*` files (one in `$ZDOTDIR` and one in `$XDG_CACHE_HOME/zsh`)
 - Fix `.zcompdump*` files missing `$SHORT_HOST` in their file names
-- Install Elixir-LS for use with NeoVim LS plugin
 - Install Elixir and Erlang from source so that Elixir-LS can jump to source
 - Support Phoenix Development (probably requires configuring ports with Docker)
 - Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
@@ -135,19 +134,7 @@ Currently, the following configuration files are provided:
 - Figure out how to use SSH keys
 - Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
 - Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
-- Fix Elixir locale error:
-```
-Step 58/68 : RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
- ---> Running in 0c39d3930a1d
-warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verifie
-d by running "locale" in your shell
-```
-- Fix package configuration warning:
-```
-Step 11/45 : RUN apt-get install -y     man-db     locales     apt-utils     make     cmake     git     curl
- ---> Running in ee647c964540
-debconf: delaying package configuration, since apt-utils is not installed
-```
+- Don't show warnings/errors on status line when there are none to show
 
 ## Documentation TODO
 - Readme info on how to restart a stopped container
