@@ -135,6 +135,21 @@ Currently, the following configuration files are provided:
 - Figure out how to use SSH keys
 - Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
 - Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
+- Fix Elixir locale error:
+```
+Step 58/68 : RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
+ ---> Running in 0c39d3930a1d
+warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verifie
+d by running "locale" in your shell
+```
+- Fix package configuration warning:
+```
+Step 11/45 : RUN apt-get install -y     man-db     locales     apt-utils     make     cmake     git     curl
+ ---> Running in ee647c964540
+debconf: delaying package configuration, since apt-utils is not installed
+```
+
+## Documentation TODO
 - Readme info on how to restart a stopped container
 - Readme info on how to `exec` into background container
 - Readme info on goals

@@ -39,6 +39,12 @@ RUN apt-get install -y \
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 
+# Set the correct locale variables for the build as they won't be set correctly until logging into the system
+# This is needed for when the BEAM is run when 
+# This is per the following suggestion: https://github.com/elixir-lang/elixir/issues/3548
+# We need to set this after we generate the locales otherwise locale-gen will genearate an error
+ARG LC_ALL=en_US.UTF-8
+
 # Install user packages
 RUN apt-get install -y \
     tmux
@@ -160,6 +166,8 @@ RUN source $HOME/.asdf/asdf.sh && mix local.hex --force
 # Install and build Elixir-LS
 RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
 WORKDIR /usr/local/share/elixir-ls
+# Remove the ASDF tool versions file since the Elixir version doesn't match up with the version in the file
+# This is probably fine but it does generate a warning about backwards-compatibility
 RUN rm .tool-versions
 RUN source $HOME/.asdf/asdf.sh && mix deps.get
 RUN source $HOME/.asdf/asdf.sh && mix compile
