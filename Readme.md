@@ -127,13 +127,7 @@ Currently, the following configuration files are provided:
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Fix duplicate `.zcompdump*` files (one in `$ZDOTDIR` and one in `$XDG_CACHE_HOME/zsh`)
 - Fix `.zcompdump*` files missing `$SHORT_HOST` in their file names
-- Install Elixir and Erlang from source so that Elixir-LS can jump to source
-- Support Phoenix Development (probably requires configuring ports with Docker)
-- Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
-- Fix snippet support in NeoVim with Elixir (etc.)
-- Figure out how to use SSH keys
 - Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
-- Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
 - Don't show warnings/errors on status line when there are none to show
 
 ## Documentation TODO
@@ -141,3 +135,12 @@ Currently, the following configuration files are provided:
 - Readme info on how to `exec` into background container
 - Readme info on goals
 - Readme info on advantages/disadvantages
+
+## Features TODO
+- Add [Tmux CPU plugin](https://github.com/tmux-plugins/tmux-cpu)
+- Install Elixir and Erlang from source so that Elixir-LS can jump to source
+- Support Phoenix Development (probably requires configuring ports with Docker)
+- Look into [coc.nvim](https://github.com/neoclide/coc.nvim) to replace LanguageClient-NeoVim (potentially)
+- Fix snippet support in NeoVim with Elixir (etc.)
+- Figure out how to use SSH keys
+- Use [Lightline](https://github.com/itchyny/lightline.vim) instead of Airline for NeoVim
