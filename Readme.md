@@ -27,13 +27,15 @@ My personal development machine inside [Docker](https://www.docker.com/).
 The image is automatically built to [Docker Hub here](https://hub.docker.com/r/jswny/devbox) from each commit on the master branch. Thus, the only tag on the image is `latest`. So, when you pull the image, you will pull the image which was built from the latest commit to master.
 
 ## Usage
+Since Devbox is built on Docker, you might want to read the [Docker documentation](https://docs.docker.com/) in order to learn all about using it, specifically the [getting started section about containers](https://docs.docker.com/get-started/part2/). However, this document should provide enough direction to use the container for basic use.
+
 ### Docker Image
 The Docker image is available from the [Docker Hub](https://hub.docker.com/r/jswny/devbox). A new image is pushed to the `jswny/devbox:latest` tag each time a new commit is pushed to the `master` branch of the [GitHub repository](https://github.com/jswny/devbox).
 
 The image is based on [Ubuntu `18.04`](https://hub.docker.com/_/ubuntu).
 
 ### Getting the Image
-To run the image, you can either clone this repository and build the image from source (which will take about 10-15 minutes), or, you can pull it and run it from Docker Hub. See below for instructions for each option.
+To obtain the image actual image so that you can run it, you can either clone this repository and build the image from source (which will take about 10-15 minutes as the image is quite large), or, you can pull it and run it from Docker Hub. See below for instructions for each option.
 
 #### Building from Source
 To build the image from source, first clone this repository, then build it using Docker.
@@ -70,26 +72,42 @@ $ docker run -it jswny/devbox
 ### Volumes
 You can use a [Docker volume](https://docs.docker.com/storage/volumes/) to mount local files into the internal filesystem of the container so that you can access them inside the container. Any changes you make to the files in the volume inside the container will be reflected outside the container, and vice versa.
 
-To mount a volume when running the container, add the `-v /local/path/:/internal/container/path` flag when running the container.
-
+To mount a volume when running the container, add the `-v /local/path/:/internal/container/path` flag when running the container:
 ```sh
 $ docker run -it --rm -v /local/path/:/internal/container/path -h devbox --name devbox jswny/devbox
 ```
 
 ### Stop the Container
+If the container is still running and you need to stop it, such as if it was shown when you run `docker container ls`, you can do the following:
 ```sh
 $ docker stop devbox
 ```
+**Warning:** this will completely stop the container and anything running inside of it, so be careful.
 
 ### Remove a Stopped Container
+Once a container is stopped, it will not be shown when you run `docker container ls`, but it will be shown when you run `docker container ls -a`, which will show that the container has exited, which looks something like this:
+```sh
+$ docker container ls -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+b2173dbd2146        alpine:latest       "/bin/sh"                40 seconds ago      Exited (0) 39 seconds ago                       brave_pike
+```
+
+To remove a stopped container, you can do the following:
 ```sh
 $ docker rm devbox
 ```
 
 ### Remove the Image
+If you want to remove the actual image from which you run Devbox containers, you can remove it like so:
 ```sh
 $ docker rmi jswny/devbox
 ```
+
+If you want to remove all of the cached layers to ensure everything is completely clean, you can use the following:
+```sh
+docker system prune
+```
+You may want to do this if you are compiling the image from the Dockerfile yourself to ensure that everything is built cleanly.
 
 ## Host Terminal Configuration
 Devbox is optimized for the [Solarized Dark](https://ethanschoonover.com/solarized/) colorscheme.
@@ -117,7 +135,7 @@ Currently, the following configuration files are provided:
 - `.config/tmux/tmux.conf` for [Tmux](https://github.com/tmux/tmux)
 
 ## Known Issues
-- When running Devbox inside Tmux from the host, Zsh does not render the prompt spacing correctly, so the Agnoster prompt will not have a space before typing like it should have.
+- When running Devbox inside Tmux from the host, Zsh does not always render the prompt spacing correctly, so the Agnoster prompt might not have a space before typing like it should have.
   - With Tmux:
   ![Issue with Tmux](images/issue-tmux-zsh-spacing-bad.png)
   - Without Tmux:
