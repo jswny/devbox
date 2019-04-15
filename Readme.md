@@ -144,9 +144,9 @@ Currently, the following configuration files are provided:
 ## TODO
 - Use XDG for ASDF (should be `$XDG_DATA_HOME/asdf`)
 - Fix duplicate `.zcompdump*` files (one in `$ZDOTDIR` and one in `$XDG_CACHE_HOME/zsh`)
-- Fix `.zcompdump*` files missing `$SHORT_HOST` in their file names
 - Find some way to use Tmux with the XDG config file in `$XDG_CONFIG_HOME/tmux/tmux.conf`
 - Don't show warnings/errors on status line when there are none to show
+- Set `$ZSH` for Oh-My-Zsh installer without `export`
 
 ## Documentation TODO
 - Readme info on how to restart a stopped container
