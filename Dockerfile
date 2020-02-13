@@ -7,23 +7,20 @@ ARG XDG_CONFIG_HOME=/root/.config
 ARG XDG_DATA_HOME=/root/.local/share
 ARG XDG_CACHE_HOME=/root/.cache
 ARG HOME=/root
-# Running commands through Zsh doesn't source .zshrc so ZSH_CUSTOM doesn't get set
-# So, we need to set this manually to install plugins and themes properly
-# After starting Zsh interactively, this will be set because .zshrc is sourced
-ARG ZSH_CUSTOM=$XDG_DATA_HOME/oh-my-zsh/custom
+
+# Set environment variables (these will persist at runtime)
+ENV TERM xterm-256color
+ENV XDG_DATA_HOME=${XDG_CONFIG_HOME}
 
 # Remove the exlusions for man pages and such so they get installed
 # This will only install man pages for packages that aren't built in
-# For example, "man ls" still won't work, but "man zsh" will
+# For example, "man ls" still won't work, but "man fish" will
 # To restore ALL man pages, run "yes | unminimize"
 # However, this will take a long time and install a lot of extra packages as well
 RUN rm /etc/dpkg/dpkg.cfg.d/excludes
 
 # Update packages
 RUN apt-get update
-
-# Set environment variables
-ENV TERM xterm-256color
 
 # Install essentials
 RUN apt-get install -y \
@@ -33,7 +30,9 @@ RUN apt-get install -y \
     make \
     cmake \
     git \
-    curl 
+    curl \
+# Allows usage of apt-add-repository
+    software-properties-common
 
 # Generate the correct locale and reconfigure the locales so they are picked up correctly
 RUN locale-gen en_US.UTF-8
@@ -49,28 +48,16 @@ ARG LC_ALL=en_US.UTF-8
 RUN apt-get install -y \
     tmux
 
-# Install Zsh
-RUN apt-get install -y zsh
-# Change default shell to Zsh
-RUN chsh -s $(which zsh)
-ENV SHELL /usr/bin/zsh
+# Install Fish
+RUN apt-add-repository ppa:fish-shell/release-3
+RUN apt-get update
+RUN apt-get install -y fish
+# Change default shell to Fish
+RUN chsh -s $(which fish)
+# ENV SHELL $(which fish)
 
-# Run all of the following Dockerfile commands with Zsh instead of Bash
-SHELL ["/usr/bin/zsh", "-c"]
-
-# Make a Zsh directory in the XDG data directory so that Zsh history can be stored
-RUN mkdir -p $XDG_DATA_HOME/zsh
-# Make a Zsh directory in the XDG cache directory so that Zsh .zcompdump completion files can be stored
-RUN mkdir -p $XDG_CACHE_HOME/zsh
-
-# Install Oh-My-Zsh into the XDG data directory
-RUN export ZSH="$XDG_DATA_HOME/oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# Install Oh-My-Zsh plugins and themes
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-
-# Remove default .zshrc
-RUN rm ~/.zshrc
+# Run all of the following Dockerfile commands with Fish instead of Bash
+SHELL ["/usr/bin/fish", "-c"]
 
 # Enable Solarized dircolors
 RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
@@ -174,5 +161,7 @@ RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/e
 # Set the root home directory as the working directory
 WORKDIR $HOME
 
+ADD dotfiles.sh "$XDG_DATA_HOME/dotfiles.sh"
+
 # Override this as needed
-CMD ["/usr/bin/zsh"]
+CMD .$XDG_DATA_HOME/dotfiles.sh && /usr/bin/fish
