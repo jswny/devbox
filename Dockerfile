@@ -10,7 +10,7 @@ ARG HOME=/root
 
 # Set environment variables (these will persist at runtime)
 ENV TERM xterm-256color
-ENV XDG_DATA_HOME=${XDG_CONFIG_HOME}
+ENV XDG_DATA_HOME=${XDG_DATA_HOME}
 
 # Remove the exlusions for man pages and such so they get installed
 # This will only install man pages for packages that aren't built in
@@ -58,6 +58,9 @@ RUN chsh -s $(which fish)
 
 # Run all of the following Dockerfile commands with Fish instead of Bash
 SHELL ["/usr/bin/fish", "-c"]
+
+# Install Fisher (Fish plugin manager)
+RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 # Enable Solarized dircolors
 RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
@@ -164,4 +167,4 @@ WORKDIR $HOME
 ADD dotfiles.sh "$XDG_DATA_HOME/dotfiles.sh"
 
 # Override this as needed
-CMD .$XDG_DATA_HOME/dotfiles.sh && /usr/bin/fish
+CMD $XDG_DATA_HOME/dotfiles.sh && /usr/bin/fish
