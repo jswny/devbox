@@ -55,10 +55,6 @@ RUN apt-get install -y zsh
 RUN chsh -s $(which zsh)
 ENV SHELL /usr/bin/zsh
 
-# Add custom config files to container
-ADD dotfiles/.config/ $XDG_CONFIG_HOME
-ADD dotfiles/.zshenv $HOME/
-
 # Run all of the following Dockerfile commands with Zsh instead of Bash
 SHELL ["/usr/bin/zsh", "-c"]
 
