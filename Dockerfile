@@ -65,13 +65,13 @@ RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/di
 RUN apt-get install -y \
     libevent-dev \
     ncurses-dev
-
 # Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
-RUN mkdir $XDG_CACHE_HOME
+RUN mkdir -p $XDG_CACHE_HOME
 RUN curl -sL https://github.com/tmux/tmux/releases/download/3.0a/tmux-3.0a.tar.gz | tar zx --directory $XDG_CACHE_HOME
 WORKDIR $XDG_CACHE_HOME/tmux-3.0a
 RUN ./configure && make
 RUN make install
+RUN rm -rf $XDG_CACHE_HOME/tmux-3.0a
 
 # Install TPM (Tmux Plugin Manager)
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
@@ -130,20 +130,17 @@ RUN apt-get install -y \
     g++ \
     pkg-config \
     unzip
-RUN git clone https://github.com/neovim/neovim.git /tmp/nvim
-WORKDIR /tmp/nvim
-RUN git checkout v0.3.2
+RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
+WORKDIR $XDG_CACHE_HOME/nvim
+RUN git checkout v0.4.3
 RUN make clean
 RUN make CMAKE_BUILD_TYPE=Release install
 WORKDIR $HOME
-RUN rm -rf /tmp/nvim
+RUN rm -rf $XDG_CACHE_HOME/nvim
 RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
 # Install vim-plug
-RUN curl -sfLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# Install NeoVim plugins and output to log file since this output is not noninteractive
-RUN vim --headless '+PlugInstall --sync' +qa &> /var/log/nvim_plug_install.log
+RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install Rebar3
 RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
@@ -164,6 +161,7 @@ RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/e
 # Set the root home directory as the working directory
 WORKDIR $HOME
 
+# Add the dotfiles setup script to be run at runtime
 ADD dotfiles.sh $XDG_DATA_HOME/dotfiles.sh
 
 # Override this as needed
