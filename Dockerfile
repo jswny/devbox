@@ -44,10 +44,6 @@ RUN dpkg-reconfigure locales
 # We need to set this after we generate the locales otherwise locale-gen will genearate an error
 ARG LC_ALL=en_US.UTF-8
 
-# Install user packages
-RUN apt-get install -y \
-    tmux
-
 # Install Fish
 RUN apt-add-repository ppa:fish-shell/release-3
 RUN apt-get update
@@ -65,16 +61,20 @@ RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fishe
 # Enable Solarized dircolors
 RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
 
+# Install Tmux installation dependencies
+RUN apt-get install -y \
+    libevent-dev \
+    ncurses-dev
+
+# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
+RUN mkdir $XDG_CACHE_HOME
+RUN curl -sL https://github.com/tmux/tmux/releases/download/3.0a/tmux-3.0a.tar.gz | tar zx --directory $XDG_CACHE_HOME
+WORKDIR $XDG_CACHE_HOME/tmux-3.0a
+RUN ./configure && make
+RUN make install
+
 # Install TPM (Tmux Plugin Manager)
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
-# Symlink to the regular Tmux config file location because otherwise TPM doesn't work
-RUN ln -s $XDG_CONFIG_HOME/tmux/tmux.conf $HOME/.tmux.conf
-# Install TPM plugins
-RUN $XDG_DATA_HOME/tmux/plugins/tpm/bin/install_plugins
-
-# Install FZF without Bash support
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
-RUN $XDG_DATA_HOME/fzf/install --all --no-bash --xdg
 
 # Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
@@ -164,7 +164,7 @@ RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/e
 # Set the root home directory as the working directory
 WORKDIR $HOME
 
-ADD dotfiles.sh "$XDG_DATA_HOME/dotfiles.sh"
+ADD dotfiles.sh $XDG_DATA_HOME/dotfiles.sh
 
 # Override this as needed
 CMD $XDG_DATA_HOME/dotfiles.sh && /usr/bin/fish
