@@ -10,7 +10,9 @@ ARG HOME=/root
 
 # Set environment variables (these will persist at runtime)
 ENV TERM xterm-256color
+ENV XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
 ENV XDG_DATA_HOME=${XDG_DATA_HOME}
+ENV XDG_CACHE_HOME=${XDG_CACHE_HOME}
 
 # Remove the exlusions for man pages and such so they get installed
 # This will only install man pages for packages that aren't built in
@@ -164,8 +166,14 @@ RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/e
 # Set the root home directory as the working directory
 WORKDIR $HOME
 
-# Add the dotfiles setup script to be run at runtime
-ADD dotfiles.sh $XDG_DATA_HOME/dotfiles.sh
+# Always run the dotfiles setup script at runtime
+# This ensures the container always gets the latest dotfiles version
+# If this was run at build-time, the dotfiles version would be tied to when the cointainer was built
+ENTRYPOINT git clone https://github.com/jswny/dotfiles.git $XDG_CONFIG_HOME/dotfiles \
+    && cd $XDG_CONFIG_HOME/dotfiles \
+    && $XDG_CONFIG_HOME/dotfiles/setup.sh \
+    && cd $HOME
 
 # Override this as needed
-CMD $XDG_DATA_HOME/dotfiles.sh && /usr/bin/fish
+# Run a regular Fish shell by default
+CMD /usr/bin/fish
