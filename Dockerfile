@@ -44,66 +44,8 @@ RUN dpkg-reconfigure locales
 # We need to set this after we generate the locales otherwise locale-gen will genearate an error
 ARG LC_ALL=en_US.UTF-8
 
-# Install Fish
-RUN apt-add-repository ppa:fish-shell/release-3
-RUN apt-get update
-RUN apt-get install -y fish
-# Change default shell to Fish
-RUN chsh -s $(which fish)
-# ENV SHELL $(which fish)
-
-# Run all of the following Dockerfile commands with Fish instead of Bash
-SHELL ["/usr/bin/fish", "-c"]
-
-# Install Fisher (Fish plugin manager)
-RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-
-# Enable Solarized dircolors
-RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
-
-# Install Tmux installation dependencies
-RUN apt-get install -y \
-    libevent-dev \
-    ncurses-dev
-# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
-RUN mkdir -p $XDG_CACHE_HOME
-RUN curl -sL https://github.com/tmux/tmux/releases/download/3.0a/tmux-3.0a.tar.gz | tar zx --directory $XDG_CACHE_HOME
-WORKDIR $XDG_CACHE_HOME/tmux-3.0a
-RUN ./configure && make
-RUN make install
-RUN rm -rf $XDG_CACHE_HOME/tmux-3.0a
-
-# Install TPM (Tmux Plugin Manager)
-RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
-
-# Install ASDF
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
-# Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
-RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
-RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
-# Install Erlang with ASDF
-RUN apt-get install -y \
-    build-essential \
-    autoconf \
-    m4 \
-    libncurses5-dev \
-    libwxgtk3.0-dev \
-    libgl1-mesa-dev \
-    libglu1-mesa-dev \
-    libpng16-16 \
-    libssh-dev \
-    unixodbc-dev \
-    xsltproc \
-    libxml2-utils \
-    fop
-# Install languages with ASDF and set globals
-RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
-RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
-# Install Elixir 1.8.0 instead of 1.8.1 because otherwise there is one failing test (https://github.com/elixir-lang/elixir/issues/8640)
-RUN source $HOME/.asdf/asdf.sh && asdf install elixir ref:v1.8.0
-RUN source $HOME/.asdf/asdf.sh && asdf global elixir ref:v1.8.0
-
 # Install Pip for Python 2 and 3
+# Ubuntu already comes with Python 2 and 3 installed
 RUN apt-get install -y \
     python-pip \
     python3-pip
@@ -141,6 +83,67 @@ RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
 # Install vim-plug
 RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install Fish
+RUN apt-add-repository ppa:fish-shell/release-3
+RUN apt-get update
+RUN apt-get install -y fish
+# Change default shell to Fish
+RUN chsh -s $(which fish)
+
+# Run all of the following Dockerfile commands with Fish instead of Bash
+SHELL ["/usr/bin/fish", "-c"]
+
+# Install Fisher (Fish plugin manager)
+RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+
+# Enable Solarized dircolors
+RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
+
+# Install Tmux installation dependencies
+RUN apt-get install -y \
+    libevent-dev \
+    ncurses-dev \
+    bison
+# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
+RUN mkdir -p $XDG_CACHE_HOME
+RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
+WORKDIR $XDG_CACHE_HOME/tmux
+RUN git checkout 3.1
+RUN sh autogen.sh
+RUN ./configure && make
+RUN make install
+RUN rm -rf $XDG_CACHE_HOME/tmux
+
+# Install TPM (Tmux Plugin Manager)
+RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
+
+# Install ASDF
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+# Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
+RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
+# Install Erlang with ASDF
+RUN apt-get install -y \
+    build-essential \
+    autoconf \
+    m4 \
+    libncurses5-dev \
+    libwxgtk3.0-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libpng16-16 \
+    libssh-dev \
+    unixodbc-dev \
+    xsltproc \
+    libxml2-utils \
+    fop
+# Install languages with ASDF and set globals
+RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
+RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
+# Install Elixir 1.8.0 instead of 1.8.1 because otherwise there is one failing test (https://github.com/elixir-lang/elixir/issues/8640)
+RUN source $HOME/.asdf/asdf.sh && asdf install elixir ref:v1.8.0
+RUN source $HOME/.asdf/asdf.sh && asdf global elixir ref:v1.8.0
 
 # Install Rebar3
 RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
