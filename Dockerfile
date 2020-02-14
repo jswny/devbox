@@ -121,10 +121,15 @@ RUN rm -rf $XDG_CACHE_HOME/tmux
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
 
 # Install ASDF
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+RUN git clone https://github.com/asdf-vm/asdf.git $XDG_DATA_HOME/asdf --branch v0.7.6
+# 
+RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/config.fish
+RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/completions/asdf.fish $XDG_CONFIG_HOME/fish/completions
+
 # Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
 RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
 RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
+
 # Install Erlang with ASDF
 RUN apt-get install -y \
     build-essential \
@@ -166,14 +171,13 @@ RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/e
 # Set the root home directory as the working directory
 WORKDIR $HOME
 
-# Always run the dotfiles setup script at runtime
+# Override this as needed
+# Run the dotfiles setup script at runtime
 # This ensures the container always gets the latest dotfiles version
 # If this was run at build-time, the dotfiles version would be tied to when the cointainer was built
-ENTRYPOINT git clone https://github.com/jswny/dotfiles.git $XDG_CONFIG_HOME/dotfiles \
+# Run a regular Fish shell by default
+CMD git clone https://github.com/jswny/dotfiles.git $XDG_CONFIG_HOME/dotfiles \
     && cd $XDG_CONFIG_HOME/dotfiles \
     && $XDG_CONFIG_HOME/dotfiles/setup.sh \
-    && cd $HOME
-
-# Override this as needed
-# Run a regular Fish shell by default
-CMD /usr/bin/fish
+    && cd $HOME \
+    && /usr/bin/fish
