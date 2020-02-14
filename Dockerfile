@@ -122,9 +122,9 @@ RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tp
 
 # Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git $XDG_DATA_HOME/asdf --branch v0.7.6
-# 
-RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/config.fish
+# Add ASDF support and completions to fish
 RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/completions/asdf.fish $XDG_CONFIG_HOME/fish/completions
+RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/local.config.fish
 
 # Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
 RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
