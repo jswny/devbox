@@ -120,6 +120,10 @@ RUN rm -rf $XDG_CACHE_HOME/tmux
 # Install TPM (Tmux Plugin Manager)
 RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
 
+# Install FZF without Bash or ZSH support
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
+RUN $XDG_DATA_HOME/fzf/install --all --no-bash --no-zsh --xdg
+
 # Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git $XDG_DATA_HOME/asdf --branch v0.7.6
 # Add ASDF support and completions to fish
@@ -127,8 +131,8 @@ RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/compl
 RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/local.config.fish
 
 # Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
-RUN source $HOME/.asdf/asdf.sh && asdf plugin-add erlang
-RUN source $HOME/.asdf/asdf.sh && asdf plugin-add elixir
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add erlang
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add elixir
 
 # Install Erlang with ASDF
 RUN apt-get install -y \
@@ -146,16 +150,16 @@ RUN apt-get install -y \
     libxml2-utils \
     fop
 # Install languages with ASDF and set globals
-RUN source $HOME/.asdf/asdf.sh && asdf install erlang 21.2.5
-RUN source $HOME/.asdf/asdf.sh && asdf global erlang 21.2.5
-# Install Elixir 1.8.0 instead of 1.8.1 because otherwise there is one failing test (https://github.com/elixir-lang/elixir/issues/8640)
-RUN source $HOME/.asdf/asdf.sh && asdf install elixir ref:v1.8.0
-RUN source $HOME/.asdf/asdf.sh && asdf global elixir ref:v1.8.0
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf install erlang 22.2.6
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf global erlang 22.2.6
+# Install Elixir
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf install elixir ref:v1.9.4
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf global elixir ref:v1.9.4
 
 # Install Rebar3
-RUN source $HOME/.asdf/asdf.sh && mix local.rebar --force
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix local.rebar --force
 # Install Hex
-RUN source $HOME/.asdf/asdf.sh && mix local.hex --force
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix local.hex --force
 
 # Install and build Elixir-LS
 RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
@@ -163,9 +167,9 @@ WORKDIR /usr/local/share/elixir-ls
 # Remove the ASDF tool versions file since the Elixir version doesn't match up with the version in the file
 # This is probably fine but it does generate a warning about backwards-compatibility
 RUN rm .tool-versions
-RUN source $HOME/.asdf/asdf.sh && mix deps.get
-RUN source $HOME/.asdf/asdf.sh && mix compile
-RUN source $HOME/.asdf/asdf.sh && mix elixir_ls.release
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix deps.get
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix compile
+RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix elixir_ls.release
 RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir-ls.sh 
 
 # Set the root home directory as the working directory
