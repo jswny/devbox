@@ -46,46 +46,6 @@ RUN dpkg-reconfigure locales
 # We need to set this after we generate the locales otherwise locale-gen will genearate an error
 ARG LC_ALL=en_US.UTF-8
 
-# Install Pip for Python 2 and 3
-# Ubuntu already comes with Python 2 and 3 installed
-RUN apt-get install -y \
-    python-pip \
-    python3-pip
-# Upgrade Python 2 and 3 Pip versions
-RUN pip2 install --upgrade pip
-RUN pip3 install --upgrade pip
-
-# Install Fuck
-RUN pip3 install thefuck
-
-# Install Python 2 and 3 providers for NeoVim
-RUN pip2 install --upgrade pynvim
-RUN pip3 install --upgrade pynvim
-# Build and install NeoVim from source
-# This is necessary because certain plugins require the latest version
-RUN apt-get install -y \
-    ninja-build \
-    gettext \
-    libtool \
-    libtool-bin \
-    autoconf \
-    automake \
-    cmake \
-    g++ \
-    pkg-config \
-    unzip
-RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
-WORKDIR $XDG_CACHE_HOME/nvim
-RUN git checkout v0.4.3
-RUN make clean
-RUN make CMAKE_BUILD_TYPE=Release install
-WORKDIR $HOME
-RUN rm -rf $XDG_CACHE_HOME/nvim
-RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
-
-# Install vim-plug
-RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 # Install Fish
 RUN apt-add-repository ppa:fish-shell/release-3
 RUN apt-get update
@@ -99,38 +59,14 @@ SHELL ["/usr/bin/fish", "-c"]
 # Install Fisher (Fish plugin manager)
 RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
-# Enable Solarized dircolors
-RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
-
-# Install Tmux installation dependencies
-RUN apt-get install -y \
-    libevent-dev \
-    ncurses-dev \
-    bison
-# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
-RUN mkdir -p $XDG_CACHE_HOME
-RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
-WORKDIR $XDG_CACHE_HOME/tmux
-RUN git checkout 3.1
-RUN sh autogen.sh
-RUN ./configure && make
-RUN make install
-RUN rm -rf $XDG_CACHE_HOME/tmux
-
-# Install TPM (Tmux Plugin Manager)
-RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
-
-# Install FZF without Bash or ZSH support
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
-RUN $XDG_DATA_HOME/fzf/install --all --no-bash --no-zsh --xdg
-
 # Install ASDF
 RUN git clone https://github.com/asdf-vm/asdf.git $XDG_DATA_HOME/asdf --branch v0.7.6
 # Add ASDF support and completions to fish
 RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/completions/asdf.fish $XDG_CONFIG_HOME/fish/completions
 RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/local.config.fish
 
-# Install ASDF plugins (need to source ASDF for every command because it only gets sourced normally inside ".zshrc" which isn't loaded at this time)
+# Install ASDF plugins 
+# WE need to source ASDF for every command because config.fish hasn't been added to the container yet so local.config.fish won't be loaded yet (so ASDF won't be loaded yet)
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add erlang
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add elixir
 
@@ -171,6 +107,72 @@ RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix deps.get
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix compile
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix elixir_ls.release
 RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir-ls.sh 
+
+
+# Install Pip for Python 2 and 3
+# Ubuntu already comes with Python 2 and 3 installed
+RUN apt-get install -y \
+    python-pip \
+    python3-pip
+# Upgrade Python 2 and 3 Pip versions
+RUN pip2 install --upgrade pip
+RUN pip3 install --upgrade pip
+
+# Install Fuck
+RUN pip3 install thefuck
+
+# Install Python 2 and 3 providers for NeoVim
+RUN pip2 install --upgrade pynvim
+RUN pip3 install --upgrade pynvim
+# Build and install NeoVim from source
+# This is necessary because certain plugins require the latest version
+RUN apt-get install -y \
+    ninja-build \
+    gettext \
+    libtool \
+    libtool-bin \
+    autoconf \
+    automake \
+    cmake \
+    g++ \
+    pkg-config \
+    unzip
+RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
+WORKDIR $XDG_CACHE_HOME/nvim
+RUN git checkout v0.4.3
+RUN make clean
+RUN make CMAKE_BUILD_TYPE=Release install
+WORKDIR $HOME
+RUN rm -rf $XDG_CACHE_HOME/nvim
+RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
+
+# Install vim-plug
+RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Enable Solarized dircolors
+RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
+
+# Install Tmux installation dependencies
+RUN apt-get install -y \
+    libevent-dev \
+    ncurses-dev \
+    bison
+# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
+RUN mkdir -p $XDG_CACHE_HOME
+RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
+WORKDIR $XDG_CACHE_HOME/tmux
+RUN git checkout 3.1
+RUN sh autogen.sh
+RUN ./configure && make
+RUN make install
+RUN rm -rf $XDG_CACHE_HOME/tmux
+
+# Install TPM (Tmux Plugin Manager)
+RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
+
+# Install FZF without Bash or ZSH support
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
+RUN $XDG_DATA_HOME/fzf/install --all --no-bash --no-zsh --xdg
 
 # Set the root home directory as the working directory
 WORKDIR $HOME
