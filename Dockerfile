@@ -108,7 +108,6 @@ RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix compile
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix elixir_ls.release
 RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir-ls.sh 
 
-
 # Install Pip for Python 2 and 3
 # Ubuntu already comes with Python 2 and 3 installed
 RUN apt-get install -y \
@@ -173,6 +172,14 @@ RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tp
 # Install FZF without Bash or ZSH support
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
 RUN $XDG_DATA_HOME/fzf/install --all --no-bash --no-zsh --xdg
+
+# Install FD
+WORKDIR $XDG_CACHE_HOME
+ARG FD_VERSION=7.4.0
+RUN echo fd_{$FD_VERSION}_amd64.deb
+RUN curl -sLO https://github.com/sharkdp/fd/releases/download/v{$FD_VERSION}/fd_{$FD_VERSION}_amd64.deb
+RUN dpkg -i fd_{$FD_VERSION}_amd64.deb
+RUN rm fd_{$FD_VERSION}_amd64.deb
 
 # Set the root home directory as the working directory
 WORKDIR $HOME
