@@ -57,55 +57,31 @@ RUN chsh -s $(which fish)
 SHELL ["/usr/bin/fish", "-c"]
 
 # Install Fisher (Fish plugin manager)
-RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish 
 
-# Install ASDF
-RUN git clone https://github.com/asdf-vm/asdf.git $XDG_DATA_HOME/asdf --branch v0.7.6
-# Add ASDF support and completions to fish
-RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/completions/asdf.fish $XDG_CONFIG_HOME/fish/completions
-RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/local.config.fish
+# Install Erlang
+# This uses the Erlang Solutions repo
+RUN curl -sLo $XDG_CACHE_HOME/erlang-solutions_2.0_all.deb --create-dirs https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+RUN dpkg -i $XDG_CACHE_HOME/erlang-solutions_2.0_all.deb
+RUN apt-get update
+RUN apt-get install -y esl-erlang
 
-# Install ASDF plugins 
-# Source ASDF for every command because config.fish hasn't been added to the container yet so local.config.fish won't be loaded yet (so ASDF won't be loaded yet)
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add erlang
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add elixir
-
-# Install Erlang with ASDF
-RUN apt-get install -y \
-    build-essential \
-    autoconf \
-    m4 \
-    libncurses5-dev \
-    libwxgtk3.0-dev \
-    libgl1-mesa-dev \
-    libglu1-mesa-dev \
-    libpng16-16 \
-    libssh-dev \
-    unixodbc-dev \
-    xsltproc \
-    libxml2-utils \
-    fop
-# Install languages with ASDF and set globals
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf install erlang 22.2.6
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf global erlang 22.2.6
 # Install Elixir
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf install elixir ref:v1.9.4
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf global elixir ref:v1.9.4
+RUN apt-get install -y elixir
 
 # Install Rebar3
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix local.rebar --force
+RUN mix local.rebar --force
+
 # Install Hex
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix local.hex --force
+RUN mix local.hex --force
 
 # Install and build Elixir-LS
+# ARG ELIXIR_LS_VERSION=0.3.0
 RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
 WORKDIR /usr/local/share/elixir-ls
-# Remove the ASDF tool versions file since the Elixir version doesn't match up with the version in the file
-# This is probably fine but it does generate a warning about backwards-compatibility
-RUN rm .tool-versions
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix deps.get
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix compile
-RUN source $XDG_DATA_HOME/asdf/asdf.fish && mix elixir_ls.release
+RUN mix deps.get
+RUN mix compile
+RUN mix elixir_ls.release
 RUN ln -s /usr/local/share/elixir-ls/release/language_server.sh /usr/local/bin/elixir-ls.sh 
 
 # Install Pip for Python 2 and 3
@@ -140,7 +116,9 @@ RUN apt-get install -y \
     libevent-dev \
     ncurses-dev \
     bison \
-    pkg-config
+    pkg-config \
+    autotools-dev \
+    automake
 
 # Install Tmux from source
 # Older versions than 2.9 do not work with some .tmux.conf syntax
