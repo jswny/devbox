@@ -76,8 +76,8 @@ RUN mix local.rebar --force
 RUN mix local.hex --force
 
 # Install and build Elixir-LS
-# ARG ELIXIR_LS_VERSION=0.3.0
-RUN git clone https://github.com/elixir-lsp/elixir-ls.git /usr/local/share/elixir-ls
+ARG ELIXIR_LS_VERSION=0.3.0
+RUN git clone https://github.com/elixir-lsp/elixir-ls.git --branch v{$ELIXIR_LS_VERSION} --depth 1 /usr/local/share/elixir-ls
 WORKDIR /usr/local/share/elixir-ls
 RUN mix deps.get
 RUN mix compile
@@ -109,7 +109,7 @@ RUN apt-get install -y neovim
 RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Enable Solarized dircolors
-RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
+RUN git clone --depth 1 https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
 
 # Install Tmux compilation dependencies
 RUN apt-get install -y \
@@ -123,16 +123,15 @@ RUN apt-get install -y \
 # Install Tmux from source
 # Older versions than 2.9 do not work with some .tmux.conf syntax
 RUN mkdir -p $XDG_CACHE_HOME
-RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
+RUN git clone --depth 1 --branch 3.1 https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
 WORKDIR $XDG_CACHE_HOME/tmux
-RUN git checkout 3.1
 RUN sh autogen.sh
 RUN ./configure && make
 RUN make install
 RUN rm -rf $XDG_CACHE_HOME/tmux
 
 # Install TPM (Tmux Plugin Manager)
-RUN git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
+RUN git clone --depth 1 https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
 
 # Install FZF without Bash or ZSH support
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git $XDG_DATA_HOME/fzf
@@ -162,7 +161,7 @@ WORKDIR $HOME
 # This ensures the container always gets the latest dotfiles version
 # If this was run at build-time, the dotfiles version would be tied to when the cointainer was built
 # Run a regular Fish shell by default
-CMD git clone https://github.com/jswny/dotfiles.git $XDG_CONFIG_HOME/dotfiles \
+CMD git clone --depth 1 https://github.com/jswny/dotfiles.git $XDG_CONFIG_HOME/dotfiles \
     && cd $XDG_CONFIG_HOME/dotfiles \
     && $XDG_CONFIG_HOME/dotfiles/setup.sh \
     && cd $HOME \
