@@ -66,7 +66,7 @@ RUN mkdir -p $XDG_CONFIG_HOME/fish/completions; and cp $XDG_DATA_HOME/asdf/compl
 RUN echo "source $XDG_DATA_HOME/asdf/asdf.fish" >> $XDG_CONFIG_HOME/fish/local.config.fish
 
 # Install ASDF plugins 
-# WE need to source ASDF for every command because config.fish hasn't been added to the container yet so local.config.fish won't be loaded yet (so ASDF won't be loaded yet)
+# Source ASDF for every command because config.fish hasn't been added to the container yet so local.config.fish won't be loaded yet (so ASDF won't be loaded yet)
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add erlang
 RUN source $XDG_DATA_HOME/asdf/asdf.fish && asdf plugin-add elixir
 
@@ -123,27 +123,31 @@ RUN pip3 install thefuck
 # Install Python 2 and 3 providers for NeoVim
 RUN pip2 install --upgrade pynvim
 RUN pip3 install --upgrade pynvim
-# Build and install NeoVim from source
-# This is necessary because certain plugins require the latest version
-RUN apt-get install -y \
-    ninja-build \
-    gettext \
-    libtool \
-    libtool-bin \
-    autoconf \
-    automake \
-    cmake \
-    g++ \
-    pkg-config \
-    unzip
-RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
-WORKDIR $XDG_CACHE_HOME/nvim
-RUN git checkout v0.4.3
-RUN make clean
-RUN make CMAKE_BUILD_TYPE=Release install
-WORKDIR $HOME
-RUN rm -rf $XDG_CACHE_HOME/nvim
-RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
+
+# Install NeoVim
+RUN add-apt-repository ppa:neovim-ppa/unstable
+RUN apt-get update
+RUN apt-get install -y neovim
+
+# RUN apt-get install -y \
+#     ninja-build \
+#     gettext \
+#     libtool \
+#     libtool-bin \
+#     autoconf \
+#     automake \
+#     cmake \
+#     g++ \
+#     pkg-config \
+#     unzip
+# RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
+# WORKDIR $XDG_CACHE_HOME/nvim
+# RUN git checkout v0.4.3
+# RUN make clean
+# RUN make CMAKE_BUILD_TYPE=Release install
+# WORKDIR $HOME
+# RUN rm -rf $XDG_CACHE_HOME/nvim
+# RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
 
 # Install vim-plug
 RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -151,12 +155,14 @@ RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://
 # Enable Solarized dircolors
 RUN git clone https://github.com/seebi/dircolors-solarized.git $XDG_DATA_HOME/dircolors-solarized
 
-# Install Tmux installation dependencies
+# Install Tmux compilation dependencies
 RUN apt-get install -y \
     libevent-dev \
     ncurses-dev \
-    bison
-# Install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
+    bison \
+    pkg-config
+
+# Compile and install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
 RUN mkdir -p $XDG_CACHE_HOME
 RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
 WORKDIR $XDG_CACHE_HOME/tmux
