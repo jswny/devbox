@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:19.10
 
 # Set environment variables for the build only (these won't persist when you run the container)
 ARG DEBIAN_FRONTEND=noninteractive
@@ -129,26 +129,6 @@ RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt-get update
 RUN apt-get install -y neovim
 
-# RUN apt-get install -y \
-#     ninja-build \
-#     gettext \
-#     libtool \
-#     libtool-bin \
-#     autoconf \
-#     automake \
-#     cmake \
-#     g++ \
-#     pkg-config \
-#     unzip
-# RUN git clone https://github.com/neovim/neovim.git $XDG_CACHE_HOME/nvim
-# WORKDIR $XDG_CACHE_HOME/nvim
-# RUN git checkout v0.4.3
-# RUN make clean
-# RUN make CMAKE_BUILD_TYPE=Release install
-# WORKDIR $HOME
-# RUN rm -rf $XDG_CACHE_HOME/nvim
-# RUN ln -s /usr/local/bin/nvim /usr/local/bin/vim
-
 # Install vim-plug
 RUN curl -sfLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
@@ -162,7 +142,8 @@ RUN apt-get install -y \
     bison \
     pkg-config
 
-# Compile and install Tmux 3.0a from release tarball (older versions do not work with some .tmux.conf syntax)
+# Install Tmux from source
+# Older versions than 2.9 do not work with some .tmux.conf syntax
 RUN mkdir -p $XDG_CACHE_HOME
 RUN git clone https://github.com/tmux/tmux.git $XDG_CACHE_HOME/tmux
 WORKDIR $XDG_CACHE_HOME/tmux
